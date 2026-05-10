@@ -50,7 +50,7 @@ export default function HomePage() {
           <div className="flex justify-center gap-8 mt-14">
             {[
               { value: `${totalLessons}`, label: 'lecciones' },
-              { value: '5', label: 'módulos' },
+              { value: `${modules.length}`, label: 'módulos' },
               { value: '100%', label: 'gratis' },
             ].map((s) => (
               <div key={s.label} className="text-center">

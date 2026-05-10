@@ -1,9 +1,14 @@
 export interface QuizQuestion {
   question: string
   options: string[]
-  correctIndex: number
-  feedbackCorrect: string
-  feedbackIncorrect: string
+  // Formato nuevo (módulos 6+): correctAnswer es el texto exacto de la opción correcta
+  correctAnswer?: string
+  correctFeedback?: string
+  incorrectFeedback?: string
+  // Formato legado (módulos 1-5): compatibilidad hacia atrás
+  correctIndex?: number
+  feedbackCorrect?: string
+  feedbackIncorrect?: string
 }
 
 export interface Lesson {

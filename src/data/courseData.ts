@@ -1,6 +1,7 @@
 import type { Lesson, Module } from '@/types'
+import { newLessons, newModules } from './courseLessons2'
 
-export const lessons: Lesson[] = [
+const baseLessons: Lesson[] = [
   // ─── MÓDULO 1 ───────────────────────────────────────────────────
   {
     slug: 'que-es-python',
@@ -1665,32 +1666,35 @@ imprimir_titulo("Resumen", ancho=40)`,
   },
 ]
 
+export const lessons: Lesson[] = [...baseLessons, ...newLessons]
+
 export const modules: Module[] = [
   {
     number: 1,
     title: 'Introducción a Python',
-    lessons: lessons.filter((l) => l.moduleNumber === 1),
+    lessons: baseLessons.filter((l) => l.moduleNumber === 1),
   },
   {
     number: 2,
     title: 'Fundamentos',
-    lessons: lessons.filter((l) => l.moduleNumber === 2),
+    lessons: baseLessons.filter((l) => l.moduleNumber === 2),
   },
   {
     number: 3,
     title: 'Control de flujo',
-    lessons: lessons.filter((l) => l.moduleNumber === 3),
+    lessons: baseLessons.filter((l) => l.moduleNumber === 3),
   },
   {
     number: 4,
     title: 'Estructuras de datos',
-    lessons: lessons.filter((l) => l.moduleNumber === 4),
+    lessons: baseLessons.filter((l) => l.moduleNumber === 4),
   },
   {
     number: 5,
     title: 'Funciones',
-    lessons: lessons.filter((l) => l.moduleNumber === 5),
+    lessons: baseLessons.filter((l) => l.moduleNumber === 5),
   },
+  ...newModules,
 ]
 
 export function getLessonBySlug(slug: string): Lesson | undefined {
