@@ -7,6 +7,121 @@ import { useUser } from '@/hooks/useUser'
 import LessonCard from '@/components/course/LessonCard'
 import ProgressBar from '@/components/ui/ProgressBar'
 import AnonymousBanner from '@/components/ui/AnonymousBanner'
+import type { Module } from '@/types'
+
+const basicModules = modules.filter((m) => m.level === 'básico' || !m.level)
+const intermediateModules = modules.filter((m) => m.level === 'intermedio')
+const practicalModules = modules.filter((m) => m.level === 'practico')
+
+function ChevronIcon({ open }: { open: boolean }) {
+  return (
+    <svg
+      className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+    </svg>
+  )
+}
+
+function ModuleSection({
+  mod,
+  completedSlugs,
+  badgeColor,
+  numberBg,
+}: {
+  mod: Module
+  completedSlugs: string[]
+  badgeColor: string
+  numberBg: string
+}) {
+  const completed = mod.lessons.filter((l) => completedSlugs.includes(l.slug)).length
+  const [open, setOpen] = useState(true)
+
+  return (
+    <div className="border border-gray-800 rounded-xl overflow-hidden">
+      <button
+        onClick={() => setOpen((o) => !o)}
+        className="w-full flex items-center gap-3 px-4 py-3 bg-gray-900 hover:bg-gray-800/70 transition-colors text-left"
+      >
+        <span
+          className={`${numberBg} font-bold text-sm w-7 h-7 rounded-full flex items-center justify-center shrink-0`}
+        >
+          {mod.number}
+        </span>
+        <h3 className="text-white font-bold text-base flex-1">{mod.title}</h3>
+        <span className="text-gray-500 text-sm mr-2">
+          {completed}/{mod.lessons.length}
+        </span>
+        <ChevronIcon open={open} />
+      </button>
+      {open && (
+        <div className="px-3 py-2 space-y-1.5 bg-gray-950/40">
+          {mod.lessons.map((lesson) => (
+            <LessonCard
+              key={lesson.slug}
+              lesson={lesson}
+              completed={completedSlugs.includes(lesson.slug)}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function LevelSection({
+  title,
+  badge,
+  badgeStyle,
+  mods,
+  completedSlugs,
+  badgeColor,
+  numberBg,
+}: {
+  title: string
+  badge: string
+  badgeStyle: string
+  mods: Module[]
+  completedSlugs: string[]
+  badgeColor: string
+  numberBg: string
+}) {
+  if (mods.length === 0) return null
+  const totalInLevel = mods.reduce((acc, m) => acc + m.lessons.length, 0)
+  const completedInLevel = mods.reduce(
+    (acc, m) => acc + m.lessons.filter((l) => completedSlugs.includes(l.slug)).length,
+    0
+  )
+
+  return (
+    <div className="mb-10">
+      <div className="flex items-center gap-3 mb-4">
+        <h2 className="text-xl font-bold text-white">{title}</h2>
+        <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${badgeStyle}`}>
+          {badge}
+        </span>
+        <span className="text-gray-600 text-sm ml-auto">
+          {completedInLevel}/{totalInLevel}
+        </span>
+      </div>
+      <div className="space-y-3">
+        {mods.map((mod) => (
+          <ModuleSection
+            key={mod.number}
+            mod={mod}
+            completedSlugs={completedSlugs}
+            badgeColor={badgeColor}
+            numberBg={numberBg}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
 
 export default function CursoPage() {
   const { user, loading } = useUser()
@@ -27,7 +142,7 @@ export default function CursoPage() {
       <div className="mb-10">
         <h1 className="text-3xl font-bold text-white mb-2">Python desde Cero</h1>
         <p className="text-gray-400">
-          {totalLessons} lecciones · 5 módulos · Para principiantes
+          {totalLessons} lecciones · {modules.length} módulos · Básico, Intermedio y Práctico
         </p>
       </div>
 
@@ -51,32 +166,38 @@ export default function CursoPage() {
         </div>
       )}
 
-      {/* Módulos */}
-      <div className="space-y-8">
-        {modules.map((mod) => (
-          <div key={mod.number}>
-            <div className="flex items-center gap-3 mb-4">
-              <span className="bg-yellow-400 text-gray-900 font-bold text-sm w-7 h-7 rounded-full flex items-center justify-center shrink-0">
-                {mod.number}
-              </span>
-              <h2 className="text-white font-bold text-lg">{mod.title}</h2>
-              <span className="text-gray-500 text-sm ml-auto">
-                {mod.lessons.filter((l) => completedSlugs.includes(l.slug)).length}
-                /{mod.lessons.length}
-              </span>
-            </div>
-            <div className="space-y-2">
-              {mod.lessons.map((lesson) => (
-                <LessonCard
-                  key={lesson.slug}
-                  lesson={lesson}
-                  completed={completedSlugs.includes(lesson.slug)}
-                />
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
+      {/* Python Básico */}
+      <LevelSection
+        title="Python Básico"
+        badge="Nivel Básico"
+        badgeStyle="bg-yellow-400/15 text-yellow-400 border-yellow-400/30"
+        mods={basicModules}
+        completedSlugs={completedSlugs}
+        badgeColor="yellow"
+        numberBg="bg-yellow-400 text-gray-900"
+      />
+
+      {/* Python Intermedio */}
+      <LevelSection
+        title="Python Intermedio"
+        badge="Nivel Intermedio"
+        badgeStyle="bg-blue-500/15 text-blue-400 border-blue-500/30"
+        mods={intermediateModules}
+        completedSlugs={completedSlugs}
+        badgeColor="blue"
+        numberBg="bg-blue-500 text-white"
+      />
+
+      {/* Python Práctico */}
+      <LevelSection
+        title="Python Práctico"
+        badge="Nivel Práctico"
+        badgeStyle="bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
+        mods={practicalModules}
+        completedSlugs={completedSlugs}
+        badgeColor="emerald"
+        numberBg="bg-emerald-500 text-white"
+      />
     </div>
   )
 }

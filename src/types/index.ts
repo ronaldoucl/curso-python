@@ -32,6 +32,7 @@ export interface Module {
   number: number
   title: string
   lessons: Lesson[]
+  level?: 'básico' | 'intermedio' | 'practico'
 }
 
 export interface Profile {

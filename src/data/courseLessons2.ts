@@ -17,26 +17,31 @@ export const newModules: Module[] = [
   {
     number: 6,
     title: 'Manejo de errores',
+    level: 'básico',
     lessons: lessonsModule6,
   },
   {
     number: 7,
     title: 'Entrada y salida de datos',
+    level: 'básico',
     lessons: lessonsModule7,
   },
   {
     number: 8,
     title: 'Archivos en Python',
+    level: 'básico',
     lessons: lessonsModule8,
   },
   {
     number: 9,
     title: 'Programación orientada a objetos',
+    level: 'básico',
     lessons: lessonsModule9,
   },
   {
     number: 10,
     title: 'Módulos y librerías',
+    level: 'básico',
     lessons: lessonsModule10,
   },
 ]

@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"c:\\\\projects\\\\curso-python\" -Recurse -Directory)",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(Sort-Object)",
+      "Bash(npx tsc *)",
+      "Bash(grep -n '\\\\${\\\\|`[^`]*`' \"c:\\\\projects\\\\curso-python\\\\src\\\\data\\\\module12.ts\")",
+      "Bash(\" | head -20)",
+      "Bash(grep -v \"^\\\\s*\\\\`\\\\`\\\\`\\\\|\\\\\\\\\\\\\\\\`\" | head -20)",
+      "Bash(grep -n 'f\".*\\\\${' \"c:\\\\projects\\\\curso-python\\\\src\\\\data\\\\module12.ts\")",
+      "Bash(python \"c:\\\\temp\\\\fix_modules.py\")",
+      "Bash(node -e \"const { totalLessons, modules } = require\\('./src/data/courseData.ts'\\); console.log\\('Total lecciones:', totalLessons, '| Módulos:', modules.length\\);\")",
+      "Bash(awk -F: '{sum += $2} END {print \"Total lecciones en módulos:\", sum}')",
+      "Bash(npx next *)",
+      "PowerShell(Get-ChildItem \"c:\\\\projects\\\\curso-python\\\\src\\\\data\\\\module[12345].ts\" | Select-Object Name, @{N='Lines';E={\\(Get-Content $_.FullName\\).Count}})"
+    ]
+  }
+}
