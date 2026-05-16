@@ -74,6 +74,7 @@ export async function getLessonProgress(
     .from('lesson_progress')
     .select('lesson_slug')
     .eq('user_id', userId)
+    .eq('course_slug', courseSlug)
     .eq('completed', true)
 
   if (error) throw error
