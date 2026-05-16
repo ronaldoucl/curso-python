@@ -1,7 +1,16 @@
 import Link from 'next/link'
-import { modules, totalLessons } from '@/data/courseData'
+import type { Metadata } from 'next'
+import { courses, futureCourses } from '@/data/courses'
+
+export const metadata: Metadata = {
+  title: 'RonaldoScript | Aprende programación desde cero',
+  description:
+    'Cursos gratuitos de programación en español con explicaciones simples, ejercicios prácticos y proyectos reales.',
+}
 
 export default function HomePage() {
+  const pythonCourse = courses[0]
+
   return (
     <div>
       {/* Hero */}
@@ -15,42 +24,41 @@ export default function HomePage() {
         />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 bg-yellow-400/10 border border-yellow-400/30 rounded-full px-4 py-1.5 mb-6">
-            <span>🐍</span>
-            <span className="text-yellow-400 text-sm font-medium">RonaldoScript · Curso gratuito</span>
+            <span>🚀</span>
+            <span className="text-yellow-400 text-sm font-medium">RonaldoScript · Cursos gratuitos</span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
-            Aprende Python{' '}
+            Aprende programación{' '}
             <span className="text-transparent bg-clip-text bg-linear-to-r from-yellow-400 to-orange-400">
-              desde Cero
+              desde cero
             </span>
           </h1>
 
           <p className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Aprende programación paso a paso,{' '}
-            <strong className="text-white">en español</strong>, con ejemplos simples y ejercicios
-            prácticos. Sin experiencia previa necesaria.
+            En español, con proyectos reales y sin experiencia previa necesaria.{' '}
+            <strong className="text-white">Completamente gratis.</strong>
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/curso/que-es-python"
+              href="/cursos"
               className="bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold px-8 py-3.5 rounded-xl text-lg transition-colors shadow-lg shadow-yellow-400/20"
             >
-              Empezar gratis 🚀
+              Explorar cursos 🚀
             </Link>
             <Link
-              href="/curso"
+              href="/cursos/python/que-es-python"
               className="bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white font-semibold px-8 py-3.5 rounded-xl text-lg transition-colors"
             >
-              Ver lecciones
+              Empezar Python gratis 🐍
             </Link>
           </div>
 
           <div className="flex justify-center gap-8 mt-14">
             {[
-              { value: `${totalLessons}`, label: 'lecciones' },
-              { value: `${modules.length}`, label: 'módulos' },
+              { value: `${pythonCourse.totalLessons}+`, label: 'lecciones' },
+              { value: `${pythonCourse.modules.length}`, label: 'módulos' },
               { value: '100%', label: 'gratis' },
             ].map((s) => (
               <div key={s.label} className="text-center">
@@ -62,11 +70,119 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Qué es RonaldoScript */}
+      <section className="py-20 bg-gray-900">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-3">¿Qué es RonaldoScript?</h2>
+            <p className="text-gray-400 max-w-2xl mx-auto leading-relaxed">
+              Una plataforma de aprendizaje creada para hispanohablantes que quieren aprender a programar desde cero, con cursos
+              gratuitos, explicaciones claras y proyectos prácticos.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                emoji: '💡',
+                title: 'Explicaciones simples',
+                desc: 'Usamos lenguaje cotidiano, analogías y ejemplos del mundo real. Sin jerga técnica innecesaria.',
+              },
+              {
+                emoji: '🏋️',
+                title: 'Ejercicios prácticos',
+                desc: 'Cada lección tiene ejercicios para que apliques lo aprendido. La práctica es lo que realmente enseña.',
+              },
+              {
+                emoji: '📊',
+                title: 'Progreso guardado',
+                desc: 'Regístrate con Google y guarda tu avance en la nube. Retoma desde cualquier dispositivo.',
+              },
+            ].map((b) => (
+              <div
+                key={b.title}
+                className="text-center bg-gray-800 rounded-2xl p-8 border border-gray-700"
+              >
+                <div className="text-5xl mb-4">{b.emoji}</div>
+                <h3 className="text-white font-bold text-lg mb-3">{b.title}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">{b.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Cursos disponibles */}
+      <section className="py-20 bg-gray-950">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-3">Cursos disponibles</h2>
+            <p className="text-gray-400">Empieza hoy mismo, sin costo, sin tarjeta de crédito.</p>
+          </div>
+
+          {/* Curso disponible: Python */}
+          <div className="mb-6">
+            <Link
+              href="/cursos/python"
+              className="block bg-gray-900 border border-gray-800 hover:border-yellow-400/40 rounded-2xl p-6 transition-all group"
+            >
+              <div className="flex items-start gap-5">
+                <div className="text-5xl shrink-0">{pythonCourse.icon}</div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="text-white font-bold text-xl group-hover:text-yellow-400 transition-colors">
+                      {pythonCourse.title}
+                    </h3>
+                    <span className="text-xs bg-green-500/20 text-green-400 border border-green-500/30 rounded-full px-2.5 py-0.5 font-medium">
+                      Disponible
+                    </span>
+                  </div>
+                  <p className="text-gray-400 text-sm leading-relaxed mb-4">{pythonCourse.description}</p>
+                  <div className="flex flex-wrap gap-4 text-xs text-gray-500">
+                    <span>📚 {pythonCourse.totalLessons} lecciones</span>
+                    <span>🗂 {pythonCourse.modules.length} módulos</span>
+                    <span>⭐ {pythonCourse.level}</span>
+                    <span>🌐 {pythonCourse.language}</span>
+                    <span>💰 Gratis</span>
+                  </div>
+                </div>
+                <div className="hidden sm:flex items-center shrink-0">
+                  <span className="bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold px-5 py-2.5 rounded-xl text-sm transition-colors">
+                    Ver curso →
+                  </span>
+                </div>
+              </div>
+            </Link>
+          </div>
+
+          {/* Próximamente */}
+          <div>
+            <h3 className="text-gray-500 text-sm font-semibold uppercase tracking-wider mb-4">Próximamente</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {futureCourses.map((course) => (
+                <div
+                  key={course.slug}
+                  className="bg-gray-900/50 border border-gray-800 rounded-2xl p-5 opacity-70"
+                >
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-2xl">{course.icon}</span>
+                    <div>
+                      <p className="text-white font-semibold text-sm">{course.title}</p>
+                      <span className="text-xs text-gray-500 bg-gray-800 rounded-full px-2 py-0.5">Próximamente</span>
+                    </div>
+                  </div>
+                  <p className="text-gray-500 text-xs leading-relaxed">{course.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ¿Para quién es? */}
       <section className="py-20 bg-gray-900">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-white mb-3">¿Para quién es este curso?</h2>
+            <h2 className="text-3xl font-bold text-white mb-3">¿Para quién son estos cursos?</h2>
             <p className="text-gray-400">No importa tu edad ni tu experiencia previa</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -100,137 +216,27 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Qué vas a aprender */}
-      <section className="py-20 bg-gray-950">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-white mb-3">Qué vas a aprender</h2>
-            <p className="text-gray-400">Un currículo diseñado para que avances con confianza</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[
-              '✅ Cómo funciona Python y dónde programar',
-              '✅ Variables, tipos de datos y operadores',
-              '✅ Condicionales if / elif / else',
-              '✅ Bucles for y while',
-              '✅ Listas, diccionarios, tuplas y sets',
-              '✅ Crear y reutilizar funciones',
-              '✅ Buenas prácticas de programación',
-              '✅ Ejercicios prácticos en cada lección',
-              '✅ Quiz para reforzar lo aprendido',
-            ].map((item) => (
-              <div
-                key={item}
-                className="flex items-start gap-3 bg-gray-900 rounded-xl p-4 border border-gray-800"
-              >
-                <span className="text-sm text-gray-300">{item}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Beneficios */}
-      <section className="py-20 bg-gray-900">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-white mb-3">¿Por qué Python desde Cero?</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                emoji: '💡',
-                title: 'Explicaciones simples',
-                desc: 'Usamos lenguaje cotidiano, analogías y ejemplos del mundo real. Sin jerga técnica innecesaria.',
-              },
-              {
-                emoji: '🏋️',
-                title: 'Ejercicios prácticos',
-                desc: 'Cada lección tiene ejercicios para que apliques lo aprendido. La práctica es lo que realmente enseña.',
-              },
-              {
-                emoji: '📊',
-                title: 'Progreso guardado',
-                desc: 'Regístrate con Google y guarda tu avance en la nube. Retoma desde cualquier dispositivo.',
-              },
-            ].map((b) => (
-              <div
-                key={b.title}
-                className="text-center bg-gray-800 rounded-2xl p-8 border border-gray-700"
-              >
-                <div className="text-5xl mb-4">{b.emoji}</div>
-                <h3 className="text-white font-bold text-lg mb-3">{b.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{b.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Preview módulos */}
-      <section className="py-20 bg-gray-950">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-white mb-3">El contenido del curso</h2>
-            <p className="text-gray-400">
-              {totalLessons} lecciones organizadas en 5 módulos progresivos
-            </p>
-          </div>
-          <div className="space-y-4">
-            {modules.map((mod) => (
-              <div
-                key={mod.number}
-                className="bg-gray-900 border border-gray-800 rounded-2xl p-6"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="bg-yellow-400 text-gray-900 font-bold text-sm w-7 h-7 rounded-full flex items-center justify-center shrink-0">
-                    {mod.number}
-                  </span>
-                  <h3 className="text-white font-bold text-lg">{mod.title}</h3>
-                  <span className="ml-auto text-gray-500 text-sm">
-                    {mod.lessons.length} lecciones
-                  </span>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
-                  {mod.lessons.map((lesson) => (
-                    <Link
-                      key={lesson.slug}
-                      href={`/curso/${lesson.slug}`}
-                      className="flex items-center gap-2 text-gray-400 hover:text-yellow-400 text-sm transition-colors py-1"
-                    >
-                      <span className="text-gray-600">▸</span>
-                      {lesson.title}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="text-center mt-10">
-            <Link
-              href="/curso"
-              className="inline-block bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold px-8 py-3.5 rounded-xl transition-colors"
-            >
-              Ir al curso completo →
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* CTA Final */}
       <section className="py-20 bg-linear-to-br from-yellow-400/10 to-orange-400/10 border-t border-gray-800">
         <div className="max-w-2xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-white mb-4">¿Listo para empezar?</h2>
           <p className="text-gray-400 mb-8">
-            El curso es completamente gratuito. No necesitas tarjeta de crédito ni cuenta para
-            empezar.
+            Todos los cursos son completamente gratuitos. No necesitas tarjeta de crédito ni cuenta para comenzar.
           </p>
-          <Link
-            href="/curso/que-es-python"
-            className="inline-block bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold px-10 py-4 rounded-xl text-lg transition-colors shadow-lg shadow-yellow-400/20"
-          >
-            Comenzar ahora — es gratis 🐍
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/cursos/python/que-es-python"
+              className="inline-block bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold px-10 py-4 rounded-xl text-lg transition-colors shadow-lg shadow-yellow-400/20"
+            >
+              Empezar Python ahora — gratis 🐍
+            </Link>
+            <Link
+              href="/cursos"
+              className="inline-block bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white font-semibold px-10 py-4 rounded-xl text-lg transition-colors"
+            >
+              Ver todos los cursos
+            </Link>
+          </div>
         </div>
       </section>
     </div>

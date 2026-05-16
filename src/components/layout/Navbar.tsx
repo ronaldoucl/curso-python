@@ -34,23 +34,33 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl">🐍</span>
+            <span className="text-2xl">🚀</span>
             <div className="flex flex-col leading-none">
               <span className="text-white font-bold text-sm">RonaldoScript</span>
-              <span className="text-yellow-400 text-xs font-medium">Python desde Cero</span>
+              <span className="text-yellow-400 text-xs font-medium">Aprende a programar</span>
             </div>
           </Link>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-6">
-            <Link href="/curso" className="text-gray-300 hover:text-white text-sm transition-colors">
-              Lecciones
+            <Link href="/cursos" className="text-gray-300 hover:text-white text-sm transition-colors">
+              Cursos
             </Link>
             <Link href="/progreso" className="text-gray-300 hover:text-white text-sm transition-colors">
               Mi progreso
             </Link>
             <Link href="/acerca-de" className="text-gray-300 hover:text-white text-sm transition-colors">
               Acerca de
+            </Link>
+            <Link href="/contacto" className="text-gray-300 hover:text-white text-sm transition-colors">
+              Contacto
+            </Link>
+
+            <Link
+              href="/cursos/python"
+              className="text-sm bg-yellow-400/10 hover:bg-yellow-400/20 border border-yellow-400/40 text-yellow-400 font-medium px-3 py-1.5 rounded-lg transition-colors"
+            >
+              🐍 Python
             </Link>
 
             {loading ? (
@@ -98,14 +108,24 @@ export default function Navbar() {
         {/* Mobile Menu */}
         {menuOpen && (
           <div className="md:hidden border-t border-gray-800 py-4 flex flex-col gap-3">
-            <Link href="/curso" className="text-gray-300 hover:text-white text-sm px-2" onClick={() => setMenuOpen(false)}>
-              Lecciones
+            <Link href="/cursos" className="text-gray-300 hover:text-white text-sm px-2" onClick={() => setMenuOpen(false)}>
+              Cursos
             </Link>
             <Link href="/progreso" className="text-gray-300 hover:text-white text-sm px-2" onClick={() => setMenuOpen(false)}>
               Mi progreso
             </Link>
             <Link href="/acerca-de" className="text-gray-300 hover:text-white text-sm px-2" onClick={() => setMenuOpen(false)}>
               Acerca de
+            </Link>
+            <Link href="/contacto" className="text-gray-300 hover:text-white text-sm px-2" onClick={() => setMenuOpen(false)}>
+              Contacto
+            </Link>
+            <Link
+              href="/cursos/python"
+              className="text-yellow-400 text-sm px-2 font-medium"
+              onClick={() => setMenuOpen(false)}
+            >
+              🐍 Empezar Python
             </Link>
             {!loading && (
               user ? (

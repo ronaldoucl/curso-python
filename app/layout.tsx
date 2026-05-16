@@ -7,14 +7,14 @@ import Footer from '@/components/layout/Footer'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Python desde Cero · RonaldoScript',
+  title: 'RonaldoScript | Aprende programación desde cero',
   description:
-    'Aprende Python paso a paso, en español, con ejemplos simples y ejercicios prácticos. Curso gratuito para principiantes.',
-  keywords: ['Python', 'programación', 'curso', 'español', 'gratis', 'principiantes'],
+    'Cursos gratuitos de programación en español con explicaciones simples, ejercicios prácticos y proyectos reales.',
+  keywords: ['programación', 'Python', 'JavaScript', 'cursos', 'español', 'gratis', 'principiantes'],
   authors: [{ name: 'RonaldoScript' }],
   openGraph: {
-    title: 'Python desde Cero · RonaldoScript',
-    description: 'Aprende programación paso a paso, en español, con ejemplos simples y ejercicios prácticos.',
+    title: 'RonaldoScript | Aprende programación desde cero',
+    description: 'Cursos gratuitos de programación en español con explicaciones simples, ejercicios prácticos y proyectos reales.',
     type: 'website',
   },
 }

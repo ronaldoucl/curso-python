@@ -3,13 +3,14 @@ import type { Lesson } from '@/types'
 
 interface LessonCardProps {
   lesson: Lesson
+  courseSlug: string
   completed?: boolean
 }
 
-export default function LessonCard({ lesson, completed = false }: LessonCardProps) {
+export default function LessonCard({ lesson, courseSlug, completed = false }: LessonCardProps) {
   return (
     <Link
-      href={`/curso/${lesson.slug}`}
+      href={`/cursos/${courseSlug}/${lesson.slug}`}
       className="group flex items-center gap-4 bg-gray-800 hover:bg-gray-750 border border-gray-700 hover:border-gray-600 rounded-xl p-4 transition-all"
     >
       <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-sm font-bold ${

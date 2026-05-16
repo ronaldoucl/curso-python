@@ -45,6 +45,7 @@ export interface Profile {
 export interface LessonProgress {
   id: number
   user_id: string
+  course_slug: string
   lesson_slug: string
   completed: boolean
   completed_at: string | null
@@ -54,6 +55,7 @@ export interface LessonProgress {
 export interface QuizAttempt {
   id: number
   user_id: string
+  course_slug: string
   lesson_slug: string
   score: number
   total_questions: number
@@ -63,4 +65,30 @@ export interface QuizAttempt {
 export interface UserProgress {
   completedLessons: string[]
   quizAttempts: QuizAttempt[]
+}
+
+export interface Course {
+  slug: string
+  title: string
+  shortTitle: string
+  description: string
+  level: string
+  language: string
+  status: 'available' | 'coming-soon'
+  icon: string
+  totalLessons: number
+  modules: Module[]
+}
+
+export interface CourseMeta {
+  slug: string
+  title: string
+  shortTitle: string
+  description: string
+  level: string
+  language: string
+  status: 'available' | 'coming-soon'
+  icon: string
+  totalLessons: number
+  totalModules: number
 }

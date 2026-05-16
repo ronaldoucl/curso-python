@@ -1,10 +1,12 @@
 import Link from 'next/link'
-import { totalLessons, modules } from '@/data/courseData'
+import { getCourseBySlug } from '@/data/courses'
 
-const totalModules = modules.length
-const basicCount = modules.filter((m) => m.level === 'básico' || !m.level).length
-const intermediateCount = modules.filter((m) => m.level === 'intermedio').length
-const practicalCount = modules.filter((m) => m.level === 'practico').length
+const pythonCourse = getCourseBySlug('python')!
+const totalLessons = pythonCourse.totalLessons
+const totalModules = pythonCourse.modules.length
+const basicCount = pythonCourse.modules.filter((m) => m.level === 'básico' || !m.level).length
+const intermediateCount = pythonCourse.modules.filter((m) => m.level === 'intermedio').length
+const practicalCount = pythonCourse.modules.filter((m) => m.level === 'practico').length
 
 export default function AcercaDePage() {
   return (
@@ -220,10 +222,10 @@ export default function AcercaDePage() {
       {/* CTA */}
       <div className="text-center mt-12 space-y-3">
         <Link
-          href="/curso"
+          href="/cursos/python"
           className="inline-block bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold px-8 py-3.5 rounded-xl transition-colors"
         >
-          Empezar el curso →
+          Empezar Python desde Cero →
         </Link>
         <p className="text-gray-600 text-xs">Sin registro. Sin tarjeta. Empieza ahora.</p>
       </div>
