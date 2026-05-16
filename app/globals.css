@@ -1,34 +1,223 @@
 @import "tailwindcss";
 
-:root {
-  --background: #0f1117;
-  --foreground: #f1f5f9;
+/* ══════════════════════════════════════════════════════════════════════════════
+   RONALDOSCRIPT — DESIGN SYSTEM
+
+   Colores:  Definidos en @theme → generan clases Tailwind automáticamente.
+   Fuentes:  Inter (--font-inter) y JetBrains Mono (--font-jetbrains) son
+             expuestos como CSS variables desde next/font en layout.tsx y
+             referenciados aquí en --font-sans y --font-mono.
+
+   Uso en componentes:
+     Texto normal   → font-sans  (Inter)
+     Código/técnico → font-mono  (JetBrains Mono)
+     Fondo raíz     → bg-gray-950  (#0B1020)
+     Cards          → bg-gray-900  (#111827)
+     Cards secundas → bg-gray-800  (#1F2937)
+     Borde estándar → border-gray-700  (#273449)
+     CTA plataforma → bg-primary  (#3B82F6)
+     Acento Python  → bg-accent / text-accent  (#FACC15)
+
+   Para ajustar la paleta, edita los valores en el bloque @theme de abajo.
+   Los cambios se propagan automáticamente a todos los componentes.
+══════════════════════════════════════════════════════════════════════════════ */
+
+@theme {
+  /* ── Tipografía ─────────────────────────────────────────────────────────── */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "Courier New", monospace;
+
+  /* ── Escala de grises (sobrescribe la escala por defecto de Tailwind) ───── */
+  --color-gray-950: #0B1020;   /* fondo raíz */
+  --color-gray-900: #111827;   /* surface principal / cards */
+  --color-gray-850: #162032;   /* surface intermedio */
+  --color-gray-800: #1F2937;   /* surface secundaria */
+  --color-gray-750: #253044;   /* hover surfaces */
+  --color-gray-700: #273449;   /* bordes estándar */
+  --color-gray-600: #374151;   /* bordes secundarios */
+  --color-gray-500: #4B5563;   /* texto muy muted */
+  --color-gray-400: #9CA3AF;   /* texto secundario */
+  --color-gray-300: #D1D5DB;   /* texto secondary-light */
+  --color-gray-200: #E5E7EB;
+  --color-gray-100: #F3F4F6;
+  --color-gray-50:  #F9FAFB;   /* texto primario */
+
+  /* ── Color primario de plataforma (azul) ────────────────────────────────── */
+  --color-primary:      #3B82F6;
+  --color-primary-dark: #2563EB;
+  --color-primary-muted: #1D4ED8;
+
+  /* ── Acento Python (amarillo) ───────────────────────────────────────────── */
+  --color-accent:      #FACC15;
+  --color-accent-dark: #EAB308;
+
+  /* ── Colores semánticos ─────────────────────────────────────────────────── */
+  --color-success:      #22C55E;
+  --color-success-muted: #16A34A;
+  --color-warning:      #F59E0B;
+  --color-danger:       #EF4444;
+  --color-danger-muted: #DC2626;
+
+  /* ── Fondo especial para código ─────────────────────────────────────────── */
+  --color-code-bg: #020617;
 }
 
-body {
-  background-color: var(--background);
-  color: var(--foreground);
-  -webkit-font-smoothing: antialiased;
+/* ── Estilos base globales ───────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-/* Scrollbar personalizada */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #1e2330; }
-::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #6b7280; }
+::selection {
+  background-color: #3B82F640;
+  color: #F9FAFB;
+}
 
-/* Contenido de lecciones */
-.lesson-content h2 { color: #f1f5f9; font-size: 1.2rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.5rem; }
-.lesson-content h3 { color: #e2e8f0; font-size: 1.05rem; font-weight: 600; margin-top: 1.25rem; margin-bottom: 0.5rem; }
-.lesson-content p { color: #cbd5e1; line-height: 1.75; margin-bottom: 0.75rem; }
-.lesson-content ul { color: #cbd5e1; padding-left: 1.5rem; margin-bottom: 0.75rem; }
-.lesson-content li { margin-bottom: 0.3rem; list-style-type: disc; }
-.lesson-content strong { color: #f1f5f9; font-weight: 600; }
-.lesson-content em { color: #a5b4fc; font-style: italic; }
-.lesson-content code { background: #1e2330; color: #fbbf24; padding: 0.1rem 0.4rem; border-radius: 0.25rem; font-size: 0.85em; font-family: 'Fira Code', monospace; }
-.lesson-content pre { background: #0d1117; border: 1px solid #374151; border-radius: 0.75rem; padding: 1rem; margin: 1rem 0; overflow-x: auto; }
-.lesson-content pre code { background: transparent; color: #e2e8f0; padding: 0; font-size: 0.875rem; }
-.lesson-content table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
-.lesson-content th { background: #1e2330; color: #f1f5f9; padding: 0.5rem 1rem; text-align: left; border: 1px solid #374151; }
-.lesson-content td { padding: 0.5rem 1rem; border: 1px solid #374151; color: #cbd5e1; }
-.lesson-content tr:nth-child(even) td { background: #1a2035; }
+/* Scrollbar developer-style */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: #0B1020; }
+::-webkit-scrollbar-thumb { background: #273449; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #374151; }
+
+/* ── Focus visible consistente ───────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid #3B82F6;
+  outline-offset: 2px;
+}
+
+/* ── Inputs y textareas globales ─────────────────────────────────────────── */
+input, textarea, select {
+  font-family: var(--font-sans);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   CONTENIDO DE LECCIONES (ReactMarkdown)
+   Tipografía rica para el campo explanation de cada lección.
+══════════════════════════════════════════════════════════════════════════════ */
+.lesson-content {
+  font-family: var(--font-sans);
+  color: #D1D5DB;
+  line-height: 1.8;
+}
+
+.lesson-content h2 {
+  color: #F9FAFB;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #273449;
+}
+
+.lesson-content h3 {
+  color: #E5E7EB;
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-top: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.lesson-content p {
+  margin-bottom: 0.9rem;
+}
+
+.lesson-content ul, .lesson-content ol {
+  padding-left: 1.5rem;
+  margin-bottom: 0.9rem;
+}
+
+.lesson-content li {
+  margin-bottom: 0.35rem;
+  list-style-type: disc;
+}
+
+.lesson-content ol li {
+  list-style-type: decimal;
+}
+
+.lesson-content strong {
+  color: #F9FAFB;
+  font-weight: 600;
+}
+
+.lesson-content em {
+  color: #93C5FD;
+  font-style: italic;
+}
+
+.lesson-content a {
+  color: #60A5FA;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.lesson-content a:hover {
+  color: #93C5FD;
+}
+
+/* Código inline */
+.lesson-content code {
+  background: #0F172A;
+  color: #FACC15;
+  padding: 0.1em 0.45em;
+  border-radius: 4px;
+  font-size: 0.875em;
+  font-family: var(--font-mono);
+  border: 1px solid #1E293B;
+}
+
+/* Bloques de código */
+.lesson-content pre {
+  background: #020617;
+  border: 1px solid #273449;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  margin: 1.25rem 0;
+  overflow-x: auto;
+}
+
+.lesson-content pre code {
+  background: transparent;
+  color: #E2E8F0;
+  padding: 0;
+  font-size: 0.875rem;
+  border: none;
+  font-family: var(--font-mono);
+}
+
+/* Tablas */
+.lesson-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  font-size: 0.9rem;
+}
+
+.lesson-content th {
+  background: #1F2937;
+  color: #F9FAFB;
+  padding: 0.6rem 1rem;
+  text-align: left;
+  border: 1px solid #273449;
+  font-weight: 600;
+}
+
+.lesson-content td {
+  padding: 0.6rem 1rem;
+  border: 1px solid #273449;
+  color: #D1D5DB;
+}
+
+.lesson-content tr:nth-child(even) td {
+  background: #162032;
+}
+
+/* Blockquote */
+.lesson-content blockquote {
+  border-left: 3px solid #3B82F6;
+  padding: 0.75rem 1.25rem;
+  margin: 1.25rem 0;
+  background: #1D4ED820;
+  border-radius: 0 0.5rem 0.5rem 0;
+  color: #93C5FD;
+}

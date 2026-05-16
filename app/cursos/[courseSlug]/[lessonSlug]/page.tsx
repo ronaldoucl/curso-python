@@ -46,7 +46,7 @@ export default function LessonPage({ params }: Props) {
     try {
       await saveLessonProgress(user?.id ?? null, courseSlug, lessonSlug)
       setCompleted(true)
-      setSuccessMsg('¡Lección marcada como completada! ✓')
+      setSuccessMsg('¡Lección completada! ✓')
       setTimeout(() => setSuccessMsg(''), 3000)
     } catch (err) {
       console.error(err)
@@ -57,27 +57,23 @@ export default function LessonPage({ params }: Props) {
 
   async function handleQuizComplete(score: number, total: number) {
     if (user) {
-      try {
-        await saveQuizAttempt(user.id, courseSlug, lessonSlug, score, total)
-      } catch (err) {
-        console.error(err)
-      }
+      try { await saveQuizAttempt(user.id, courseSlug, lessonSlug, score, total) }
+      catch (err) { console.error(err) }
     }
   }
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-sm text-gray-500 mb-8">
-        <Link href="/cursos" className="hover:text-gray-300 transition-colors">Cursos</Link>
-        <span>›</span>
-        <Link href={`/cursos/${courseSlug}`} className="hover:text-gray-300 transition-colors">
-          {course.shortTitle}
+      <nav className="flex items-center gap-1.5 text-xs font-mono text-gray-600 mb-8">
+        <Link href="/cursos" className="hover:text-gray-400 transition-colors">cursos</Link>
+        <span>/</span>
+        <Link href={`/cursos/${courseSlug}`} className="hover:text-gray-400 transition-colors">
+          {course.slug}
         </Link>
-        <span>›</span>
-        <span className="text-gray-400">Módulo {lesson.moduleNumber}</span>
-        <span>›</span>
-        <span className="text-gray-300">{lesson.title}</span>
+        <span>/</span>
+        <span className="text-gray-500">{lessonSlug}</span>
       </nav>
 
       {/* Banner anónimo */}
@@ -90,51 +86,46 @@ export default function LessonPage({ params }: Props) {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Contenido principal */}
         <div className="lg:col-span-3 space-y-10">
+
           {/* Cabecera */}
           <header>
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-xs text-yellow-400 bg-yellow-400/10 border border-yellow-400/30 rounded-full px-3 py-0.5 font-medium">
+            <div className="flex items-center gap-2 flex-wrap mb-3">
+              <span className="font-mono text-xs text-accent bg-accent/10 border border-accent/25 rounded-md px-2.5 py-1">
                 Módulo {lesson.moduleNumber} · {lesson.module}
               </span>
               {!loadingProgress && completed && (
-                <span className="text-xs text-green-400 bg-green-400/10 border border-green-400/30 rounded-full px-3 py-0.5">
+                <span className="font-mono text-xs text-success bg-success/10 border border-success/25 rounded-md px-2.5 py-1">
                   ✓ Completada
                 </span>
               )}
             </div>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-white mb-3">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-50 mb-3 leading-tight">
               {lesson.title}
             </h1>
-            <p className="text-gray-400 text-lg leading-relaxed">{lesson.description}</p>
+            <p className="text-gray-400 leading-relaxed">{lesson.description}</p>
           </header>
 
           {/* Explicación */}
           <section>
-            <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-              <span>📖</span> Explicación
-            </h2>
+            <SectionHeader icon="📖" title="Explicación" />
             <div className="lesson-content">
               <ReactMarkdown>{lesson.explanation}</ReactMarkdown>
             </div>
           </section>
 
-          {/* Ejemplo de código */}
+          {/* Código */}
           <section>
-            <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-              <span>💻</span> Ejemplo de código
-            </h2>
-            <CodeBlock code={lesson.codeExample} />
+            <SectionHeader icon="💻" title="Ejemplo de código" />
+            <CodeBlock code={lesson.codeExample} language="python" />
           </section>
 
           {/* Puntos clave */}
           <section>
-            <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-              <span>🔑</span> Puntos clave
-            </h2>
-            <ul className="space-y-2">
+            <SectionHeader icon="🔑" title="Puntos clave" />
+            <ul className="space-y-2.5">
               {lesson.keyPoints.map((point, i) => (
                 <li key={i} className="flex items-start gap-3 text-gray-300 text-sm">
-                  <span className="text-yellow-400 mt-0.5 shrink-0">▸</span>
+                  <span className="text-primary mt-0.5 shrink-0 font-mono text-xs">▸</span>
                   {point}
                 </li>
               ))}
@@ -143,16 +134,14 @@ export default function LessonPage({ params }: Props) {
 
           {/* Ejercicio */}
           <section>
-            <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-              <span>✍️</span> Ejercicio práctico
-            </h2>
-            <div className="bg-blue-900/20 border border-blue-700/40 rounded-xl p-5 space-y-3">
-              <p className="text-blue-200 text-sm leading-relaxed">{lesson.exercise.description}</p>
-              <details className="cursor-pointer">
-                <summary className="text-blue-400 text-xs font-medium hover:text-blue-300 transition-colors select-none">
-                  Ver pista
+            <SectionHeader icon="✍️" title="Ejercicio práctico" />
+            <div className="bg-gray-900 border border-primary/20 rounded-xl p-5 space-y-3">
+              <p className="text-gray-300 text-sm leading-relaxed">{lesson.exercise.description}</p>
+              <details className="cursor-pointer group">
+                <summary className="text-primary text-xs font-medium hover:text-gray-200 transition-colors select-none list-none flex items-center gap-1.5">
+                  <span className="font-mono">→</span> Ver pista
                 </summary>
-                <p className="mt-2 text-gray-400 text-xs leading-relaxed pl-3 border-l border-gray-700">
+                <p className="mt-3 text-gray-400 text-xs leading-relaxed pl-4 border-l border-gray-700">
                   {lesson.exercise.hint}
                 </p>
               </details>
@@ -170,78 +159,78 @@ export default function LessonPage({ params }: Props) {
           </section>
 
           {/* Marcar como completada */}
-          <section className="border-t border-gray-800 pt-8">
+          <section className="border-t border-gray-700 pt-8">
             {successMsg && (
-              <div className="mb-4 bg-green-900/30 border border-green-700 text-green-300 rounded-lg px-4 py-3 text-sm">
+              <div className="mb-4 bg-success/10 border border-success/25 text-success rounded-xl px-4 py-3 text-sm font-medium">
                 {successMsg}
               </div>
             )}
             {!loadingProgress && (
               completed ? (
-                <div className="flex items-center gap-3 text-green-400">
-                  <span className="text-2xl">🎉</span>
-                  <p className="font-semibold">¡Lección completada!</p>
+                <div className="flex items-center gap-3 text-success">
+                  <div className="w-8 h-8 rounded-lg bg-success/15 border border-success/30 flex items-center justify-center">
+                    <span className="text-sm">✓</span>
+                  </div>
+                  <p className="font-semibold text-sm">¡Lección completada!</p>
                 </div>
               ) : (
                 <button
                   onClick={handleMarkComplete}
                   disabled={markingDone}
-                  className="bg-green-600 hover:bg-green-500 text-white font-semibold px-6 py-3 rounded-xl transition-colors disabled:opacity-50 flex items-center gap-2"
+                  className="bg-success/10 hover:bg-success/20 border border-success/30 text-success font-semibold px-6 py-3 rounded-xl transition-all disabled:opacity-50 flex items-center gap-2 text-sm"
                 >
-                  {markingDone ? (
-                    <>
-                      <span className="animate-spin">⏳</span> Guardando…
-                    </>
-                  ) : (
-                    <>✓ Marcar como completada</>
-                  )}
+                  {markingDone
+                    ? <><span className="animate-spin font-mono">⏳</span> Guardando…</>
+                    : <>✓ Marcar como completada</>
+                  }
                 </button>
               )
             )}
           </section>
 
           {/* Navegación prev/next */}
-          <nav className="flex justify-between gap-4 pt-4">
+          <nav className="grid grid-cols-2 gap-4 pt-2">
             {prev ? (
               <Link
                 href={`/cursos/${courseSlug}/${prev.slug}`}
-                className="flex-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-xl p-4 text-left transition-colors group"
+                className="col-span-1 bg-gray-900 hover:bg-gray-800 border border-gray-700 hover:border-gray-600 rounded-xl p-4 text-left transition-all group"
               >
-                <p className="text-gray-500 text-xs mb-1">← Anterior</p>
-                <p className="text-white text-sm font-medium group-hover:text-yellow-400 transition-colors">
+                <p className="font-mono text-gray-600 text-xs mb-1">← anterior</p>
+                <p className="text-gray-300 text-sm font-medium group-hover:text-gray-100 transition-colors leading-snug">
                   {prev.title}
                 </p>
               </Link>
-            ) : (
-              <div className="flex-1" />
-            )}
+            ) : <div />}
+
             {next ? (
               <Link
                 href={`/cursos/${courseSlug}/${next.slug}`}
-                className="flex-1 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-xl p-4 text-right transition-colors group"
+                className="col-span-1 bg-gray-900 hover:bg-gray-800 border border-gray-700 hover:border-gray-600 rounded-xl p-4 text-right transition-all group"
               >
-                <p className="text-gray-500 text-xs mb-1">Siguiente →</p>
-                <p className="text-white text-sm font-medium group-hover:text-yellow-400 transition-colors">
+                <p className="font-mono text-gray-600 text-xs mb-1">siguiente →</p>
+                <p className="text-gray-300 text-sm font-medium group-hover:text-gray-100 transition-colors leading-snug">
                   {next.title}
                 </p>
               </Link>
             ) : (
-              <div className="flex-1 text-center bg-yellow-400/10 border border-yellow-400/30 rounded-xl p-4">
-                <p className="text-yellow-400 font-semibold text-sm">🎓 ¡Fin del curso!</p>
-                <Link href="/progreso" className="text-gray-400 text-xs hover:text-white transition-colors">
-                  Ver mi progreso
+              <div className="col-span-1 text-center bg-success/8 border border-success/20 rounded-xl p-4">
+                <p className="text-success font-semibold text-sm mb-1">🎓 ¡Curso completado!</p>
+                <Link href="/progreso" className="font-mono text-gray-500 text-xs hover:text-gray-300 transition-colors">
+                  ver mi progreso →
                 </Link>
               </div>
             )}
           </nav>
         </div>
 
-        {/* Sidebar: navegación del módulo */}
+        {/* Sidebar */}
         <aside className="hidden lg:block">
-          <div className="sticky top-24 bg-gray-900 border border-gray-800 rounded-2xl p-4">
-            <p className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-3">
-              Módulo {lesson.moduleNumber} · {lesson.module}
-            </p>
+          <div className="sticky top-24 bg-gray-900 border border-gray-700 rounded-2xl p-4">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="font-mono text-xs text-gray-600">mod.</span>
+              <span className="font-mono text-xs text-accent">{lesson.moduleNumber}</span>
+              <span className="font-mono text-xs text-gray-600 truncate">{lesson.module}</span>
+            </div>
             <ModuleSidebarLinks
               currentSlug={lessonSlug}
               courseSlug={courseSlug}
@@ -251,6 +240,15 @@ export default function LessonPage({ params }: Props) {
         </aside>
       </div>
     </div>
+  )
+}
+
+function SectionHeader({ icon, title }: { icon: string; title: string }) {
+  return (
+    <h2 className="text-base font-bold text-gray-200 mb-4 flex items-center gap-2">
+      <span>{icon}</span>
+      {title}
+    </h2>
   )
 }
 
@@ -266,18 +264,21 @@ function ModuleSidebarLinks({
   const moduleLessons = getAllLessons(courseSlug).filter((l) => l.moduleNumber === moduleNumber)
 
   return (
-    <ul className="space-y-1">
+    <ul className="space-y-0.5">
       {moduleLessons.map((l) => (
         <li key={l.slug}>
           <Link
             href={`/cursos/${courseSlug}/${l.slug}`}
-            className={`block text-sm px-3 py-2 rounded-lg transition-colors ${
+            className={`flex items-center gap-2.5 text-xs px-3 py-2 rounded-lg transition-all ${
               l.slug === currentSlug
-                ? 'bg-yellow-400/10 text-yellow-400 font-medium'
-                : 'text-gray-400 hover:text-white'
+                ? 'bg-primary/10 text-primary border border-primary/20'
+                : 'text-gray-400 hover:text-gray-200 hover:bg-gray-800'
             }`}
           >
-            {l.title}
+            <span className={`font-mono shrink-0 ${l.slug === currentSlug ? 'text-primary' : 'text-gray-600'}`}>
+              {String(l.order).padStart(2, '0')}
+            </span>
+            <span className="truncate">{l.title}</span>
           </Link>
         </li>
       ))}

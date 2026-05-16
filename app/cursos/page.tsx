@@ -1,59 +1,70 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { courses, futureCourses } from '@/data/courses'
+import Badge from '@/components/ui/Badge'
 
 export const metadata: Metadata = {
   title: 'Cursos | RonaldoScript',
   description:
-    'Explora cursos gratuitos de programación en español por RonaldoScript. Aprende Python, JavaScript, React y más desde cero.',
+    'Cursos gratuitos de programación en español. Aprende Python, JavaScript, React y más desde cero con RonaldoScript.',
 }
 
 export default function CursosPage() {
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
       {/* Header */}
       <div className="mb-12">
-        <h1 className="text-4xl font-extrabold text-white mb-3">Cursos</h1>
-        <p className="text-gray-400 text-lg max-w-2xl leading-relaxed">
-          Cursos gratuitos de programación en español. Aprende a tu ritmo, con ejercicios prácticos y quizzes en cada lección.
+        <p className="font-mono text-xs text-primary mb-2">// cursos disponibles</p>
+        <h1 className="text-3xl font-bold text-gray-50 mb-3">Cursos</h1>
+        <p className="text-gray-400 max-w-xl leading-relaxed text-sm">
+          Aprende programación desde cero, en español, con ejercicios prácticos y quizzes en cada lección.
+          Todos los cursos son completamente gratuitos.
         </p>
       </div>
 
       {/* Cursos disponibles */}
       <div className="mb-14">
-        <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-green-400 inline-block"></span>
-          Disponibles ahora
-        </h2>
+        <div className="flex items-center gap-2 mb-5">
+          <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
+          <h2 className="text-sm font-mono font-semibold text-gray-400 uppercase tracking-wider">
+            Disponibles ahora
+          </h2>
+        </div>
+
         <div className="space-y-4">
           {courses.map((course) => (
             <Link
               key={course.slug}
               href={`/cursos/${course.slug}`}
-              className="block bg-gray-900 border border-gray-800 hover:border-yellow-400/40 rounded-2xl p-6 transition-all group"
+              className="group block bg-gray-900 border border-gray-700 hover:border-primary/40 rounded-2xl p-6 transition-all hover:shadow-lg hover:shadow-primary/5"
             >
               <div className="flex items-start gap-5">
-                <div className="text-5xl shrink-0">{course.icon}</div>
+                <div className="w-14 h-14 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-3xl shrink-0">
+                  {course.icon}
+                </div>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h3 className="text-white font-bold text-xl group-hover:text-yellow-400 transition-colors">
+                  <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                    <h3 className="text-gray-50 font-bold text-xl group-hover:text-primary transition-colors">
                       {course.title}
                     </h3>
-                    <span className="text-xs bg-green-500/20 text-green-400 border border-green-500/30 rounded-full px-2.5 py-0.5 font-medium">
-                      Disponible
-                    </span>
+                    <Badge variant="success">Disponible</Badge>
                   </div>
                   <p className="text-gray-400 text-sm leading-relaxed mb-4">{course.description}</p>
-                  <div className="flex flex-wrap gap-4 text-xs text-gray-500">
-                    <span>📚 {course.totalLessons} lecciones</span>
-                    <span>🗂 {course.modules.length} módulos</span>
-                    <span>⭐ {course.level}</span>
-                    <span>🌐 {course.language}</span>
-                    <span>💰 Gratis</span>
+                  <div className="flex flex-wrap gap-4">
+                    {[
+                      `📚 ${course.totalLessons} lecciones`,
+                      `🗂 ${course.modules.length} módulos`,
+                      `⭐ ${course.level}`,
+                      `🌐 ${course.language}`,
+                      `💰 Gratis`,
+                    ].map((tag) => (
+                      <span key={tag} className="font-mono text-xs text-gray-500">{tag}</span>
+                    ))}
                   </div>
                 </div>
-                <div className="hidden sm:flex items-center shrink-0">
-                  <span className="bg-yellow-400 group-hover:bg-yellow-300 text-gray-900 font-bold px-5 py-2.5 rounded-xl text-sm transition-colors">
+                <div className="hidden sm:flex items-start pt-1 shrink-0">
+                  <span className="bg-primary group-hover:bg-primary-dark text-white font-semibold px-5 py-2 rounded-lg text-sm transition-colors">
                     Ver curso →
                   </span>
                 </div>
@@ -65,30 +76,30 @@ export default function CursosPage() {
 
       {/* Próximamente */}
       <div>
-        <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-gray-500 inline-block"></span>
-          Próximamente
-        </h2>
+        <div className="flex items-center gap-2 mb-5">
+          <span className="w-2 h-2 rounded-full bg-gray-600" />
+          <h2 className="text-sm font-mono font-semibold text-gray-600 uppercase tracking-wider">
+            Próximamente
+          </h2>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {futureCourses.map((course) => (
             <div
               key={course.slug}
-              className="bg-gray-900/50 border border-gray-800 rounded-2xl p-6 opacity-70 cursor-not-allowed"
+              className="bg-gray-900/50 border border-gray-700 rounded-2xl p-5 opacity-65 cursor-not-allowed"
             >
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-3xl">{course.icon}</span>
+                <div className="w-10 h-10 rounded-lg bg-gray-800 border border-gray-700 flex items-center justify-center text-2xl">
+                  {course.icon}
+                </div>
                 <div>
-                  <p className="text-white font-bold text-base">{course.title}</p>
-                  <span className="text-xs text-gray-500 bg-gray-800 rounded-full px-2.5 py-0.5">
-                    Próximamente
-                  </span>
+                  <p className="text-gray-300 font-bold text-sm">{course.title}</p>
+                  <Badge variant="comingSoon" className="mt-0.5">Próximamente</Badge>
                 </div>
               </div>
-              <p className="text-gray-500 text-sm leading-relaxed mb-4">{course.description}</p>
-              <div className="flex flex-wrap gap-2 text-xs text-gray-600">
-                <span>⭐ {course.level}</span>
-                <span>🌐 {course.language}</span>
-              </div>
+              <p className="text-gray-500 text-xs leading-relaxed mb-3">{course.description}</p>
+              <span className="font-mono text-xs text-gray-600">⭐ {course.level}</span>
             </div>
           ))}
         </div>

@@ -1,64 +1,76 @@
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Contacto | RonaldoScript',
+  description: '¿Tienes preguntas o sugerencias? Escríbenos.',
+}
+
 export default function ContactoPage() {
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-extrabold text-white mb-3">Contacto</h1>
-        <p className="text-gray-400">
+
+      {/* Header */}
+      <div className="mb-10">
+        <p className="font-mono text-xs text-primary mb-2">// contacto</p>
+        <h1 className="text-3xl font-bold text-gray-50 mb-2">Contacto</h1>
+        <p className="text-gray-400 text-sm">
           ¿Tienes preguntas, sugerencias o encontraste algún error? Escríbenos.
         </p>
       </div>
 
-      <div className="bg-gray-900 border border-gray-800 rounded-2xl p-8 space-y-6">
+      {/* Formulario */}
+      <div className="bg-gray-900 border border-gray-700 rounded-2xl p-8 space-y-5 mb-8">
         <div>
-          <label htmlFor="nombre" className="block text-sm font-medium text-gray-300 mb-2">
-            Nombre
+          <label htmlFor="nombre" className="block text-xs font-mono text-gray-400 mb-2">
+            nombre
           </label>
           <input
             id="nombre"
             type="text"
             placeholder="Tu nombre"
-            className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 transition-colors text-sm"
+            className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-gray-100 placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-colors text-sm"
           />
         </div>
 
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-            Correo electrónico
+          <label htmlFor="email" className="block text-xs font-mono text-gray-400 mb-2">
+            correo electrónico
           </label>
           <input
             id="email"
             type="email"
             placeholder="tu@email.com"
-            className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 transition-colors text-sm"
+            className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-gray-100 placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-colors text-sm"
           />
         </div>
 
         <div>
-          <label htmlFor="mensaje" className="block text-sm font-medium text-gray-300 mb-2">
-            Mensaje
+          <label htmlFor="mensaje" className="block text-xs font-mono text-gray-400 mb-2">
+            mensaje
           </label>
           <textarea
             id="mensaje"
             rows={5}
             placeholder="¿En qué podemos ayudarte?"
-            className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 transition-colors text-sm resize-none"
+            className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-gray-100 placeholder-gray-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-colors text-sm resize-none"
           />
         </div>
 
         <button
           type="button"
-          className="w-full bg-yellow-400 hover:bg-yellow-300 text-gray-900 font-bold py-3 rounded-xl transition-colors"
+          className="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 rounded-xl transition-colors text-sm"
         >
-          Enviar mensaje
+          Enviar mensaje →
         </button>
 
-        <p className="text-gray-500 text-xs text-center">
-          También puedes escribirnos directamente a{' '}
-          <span className="text-yellow-400">contacto@ronaldoscript.com</span>
+        <p className="text-gray-600 font-mono text-xs text-center">
+          // también puedes escribirnos a{' '}
+          <span className="text-primary">contacto@ronaldoscript.com</span>
         </p>
       </div>
 
-      <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {/* Tipos de contacto */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {[
           {
             emoji: '🐛',
@@ -71,9 +83,9 @@ export default function ContactoPage() {
             desc: '¿Hay un tema que quieres que agreguemos? Nos encanta saber qué necesitas.',
           },
         ].map((item) => (
-          <div key={item.title} className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+          <div key={item.title} className="bg-gray-900 border border-gray-700 rounded-xl p-5">
             <span className="text-2xl">{item.emoji}</span>
-            <h3 className="text-white font-semibold mt-2 mb-1 text-sm">{item.title}</h3>
+            <h3 className="text-gray-100 font-semibold text-sm mt-2 mb-1">{item.title}</h3>
             <p className="text-gray-400 text-xs leading-relaxed">{item.desc}</p>
           </div>
         ))}
