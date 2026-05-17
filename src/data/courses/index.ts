@@ -1,11 +1,19 @@
 import type { Course, CourseMeta, Lesson } from '@/types'
-import { pythonCourse } from './python'
-import { lessons as pythonLessons } from '@/data/courseData'
-import { getLessonBySlug as getPythonLessonBySlug, getPrevNextLessons as getPythonPrevNext } from '@/data/courseData'
+import { pythonEntry } from './python'
+import { javascriptEntry } from './javascript'
+import type { CourseEntry } from './types'
 
-// ── Cursos disponibles ───────────────────────────────────────────────────────
+export type { CourseEntry }
 
-export const courses: Course[] = [pythonCourse]
+// ── Registro de cursos ───────────────────────────────────────────────────────
+// Para agregar un nuevo curso: importar su CourseEntry y añadir una línea aquí.
+
+const registry = new Map<string, CourseEntry>([
+  ['python', pythonEntry],
+  ['javascript', javascriptEntry],
+])
+
+export const courses: Course[] = Array.from(registry.values()).map((e) => e.course)
 
 export const futureCourses: CourseMeta[] = [
   {
@@ -17,18 +25,6 @@ export const futureCourses: CourseMeta[] = [
     language: 'Español',
     status: 'coming-soon',
     icon: '🔷',
-    totalLessons: 0,
-    totalModules: 0,
-  },
-  {
-    slug: 'javascript',
-    title: 'JavaScript desde Cero',
-    shortTitle: 'JavaScript',
-    description: 'Domina el lenguaje de la web. Variables, funciones, eventos, promesas y mucho más.',
-    level: 'Principiante',
-    language: 'Español',
-    status: 'coming-soon',
-    icon: '🟨',
     totalLessons: 0,
     totalModules: 0,
   },
@@ -77,22 +73,19 @@ export function getAllCourses(): Course[] {
 }
 
 export function getCourseBySlug(courseSlug: string): Course | undefined {
-  return courses.find((c) => c.slug === courseSlug)
+  return registry.get(courseSlug)?.course
 }
 
 export function getLessonBySlug(courseSlug: string, lessonSlug: string): Lesson | undefined {
-  if (courseSlug === 'python') return getPythonLessonBySlug(lessonSlug)
-  return undefined
+  return registry.get(courseSlug)?.getLessonBySlug(lessonSlug)
 }
 
 export function getNextLesson(courseSlug: string, lessonSlug: string): Lesson | null {
-  if (courseSlug === 'python') return getPythonPrevNext(lessonSlug).next
-  return null
+  return registry.get(courseSlug)?.getPrevNextLessons(lessonSlug).next ?? null
 }
 
 export function getPreviousLesson(courseSlug: string, lessonSlug: string): Lesson | null {
-  if (courseSlug === 'python') return getPythonPrevNext(lessonSlug).prev
-  return null
+  return registry.get(courseSlug)?.getPrevNextLessons(lessonSlug).prev ?? null
 }
 
 export function getCourseProgress(
@@ -108,6 +101,5 @@ export function getCourseProgress(
 }
 
 export function getAllLessons(courseSlug: string): Lesson[] {
-  if (courseSlug === 'python') return pythonLessons
-  return []
+  return registry.get(courseSlug)?.getAllLessons() ?? []
 }

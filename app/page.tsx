@@ -9,48 +9,54 @@ export const metadata: Metadata = {
     'Cursos gratuitos de programación en español con explicaciones simples, ejercicios prácticos y proyectos reales.',
 }
 
-const HERO_CODE = `# RonaldoScript — Python desde Cero
+const JS_HERO_CODE = `// script.js — JavaScript desde Cero
 
-nombre = "Python"
-version = 3
+const nombre = "JavaScript";
+const anio = 1995;
 
-print(f"Hola, {nombre} {version}! 🐍")
-# → Hola, Python 3! 🐍
+console.log(\`Hola, \${nombre}!\`);
+// → Hola, JavaScript!
 
-numeros = [10, 20, 30, 40, 50]
-promedio = sum(numeros) / len(numeros)
+const numeros = [10, 20, 30, 40, 50];
+const dobles = numeros.map(n => n * 2);
 
-print(f"Promedio: {promedio}")
-# → Promedio: 30.0`
+console.log("Dobles:", dobles);
+// → Dobles: [20, 40, 60, 80, 100]
+
+const pares = numeros.filter(n => n % 20 === 0);
+console.log("Pares de 20:", pares);
+// → Pares de 20: [20, 40]`
 
 function heroFindComment(line: string): number {
-  let inStr = false, strChar = ''
+  let inStr = false, strChar = '', inTemplate = false
   for (let i = 0; i < line.length; i++) {
     const ch = line[i]
-    if (!inStr && (ch === '"' || ch === "'")) { inStr = true; strChar = ch }
+    if (!inStr && !inTemplate && ch === '`') { inTemplate = true; continue }
+    if (inTemplate && ch === '`') { inTemplate = false; continue }
+    if (!inStr && !inTemplate && (ch === '"' || ch === "'")) { inStr = true; strChar = ch }
     else if (inStr && ch === strChar && line[i - 1] !== '\\') { inStr = false }
-    else if (!inStr && ch === '#') return i
+    else if (!inStr && !inTemplate && ch === '/' && line[i + 1] === '/') return i
   }
   return -1
 }
 
 function heroHighlight(segment: string): string {
   return segment
-    .replace(/(f?"[^"]*"|f?'[^']*')/g, '<span class="text-green-400">$&</span>')
-    .replace(/\b(def|class|if|for|while|in|return|import|from|True|False|None)\b/g,
+    .replace(/(`[^`]*`|"[^"]*"|'[^']*')/g, '<span class="text-green-400">$&</span>')
+    .replace(/\b(const|let|var|function|return|if|for|of|new)\b/g,
       '<span class="text-purple-400">$1</span>')
-    .replace(/\b(print|sum|len)\b/g, '<span class="text-blue-400">$1</span>')
-    .replace(/\b(\d+\.?\d*)\b/g, '<span class="text-orange-300">$1</span>')
+    .replace(/\b(console|Math|Array|Object)\b/g, '<span class="text-blue-400">$1</span>')
+    .replace(/\.(log|map|filter|push|forEach|find)\b/g, '<span class="text-yellow-300">$&</span>')
+    .replace(/(?<!-)\b(\d+\.?\d*)\b/g, '<span class="text-orange-300">$1</span>')
 }
 
 export default function HomePage() {
-  const pythonCourse = courses[0]
+  const availableCourses = courses.filter((c) => c.status === 'available')
 
   return (
     <div>
       {/* ── Hero ─────────────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-gray-950 pt-20 pb-24 border-b border-gray-700">
-        {/* Gradiente de fondo */}
         <div
           className="absolute inset-0 opacity-30 pointer-events-none"
           style={{
@@ -67,7 +73,7 @@ export default function HomePage() {
               <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/25 rounded-full px-3.5 py-1.5 mb-6">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                 <span className="text-primary text-xs font-mono font-medium">
-                  RonaldoScript · Cursos gratuitos
+                  RonaldoScript · {availableCourses.length} cursos disponibles
                 </span>
               </div>
 
@@ -89,19 +95,13 @@ export default function HomePage() {
                 >
                   Explorar cursos →
                 </Link>
-                <Link
-                  href="/cursos/python/que-es-python"
-                  className="inline-flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-750 border border-gray-700 hover:border-accent/30 text-gray-200 hover:text-accent font-semibold px-6 py-3 rounded-xl text-sm transition-all"
-                >
-                  <span>🐍</span> Empezar Python gratis
-                </Link>
               </div>
 
               {/* Stats */}
               <div className="flex gap-6">
                 {[
-                  { value: `${pythonCourse.totalLessons}+`, label: 'lecciones' },
-                  { value: `${pythonCourse.modules.length}`, label: 'módulos' },
+                  { value: `${availableCourses.reduce((s, c) => s + c.totalLessons, 0)}+`, label: 'lecciones' },
+                  { value: `${availableCourses.length}`, label: 'cursos' },
                   { value: '100%', label: 'gratis' },
                 ].map((s) => (
                   <div key={s.label}>
@@ -115,20 +115,18 @@ export default function HomePage() {
             {/* Code preview */}
             <div className="hidden lg:block">
               <div className="rounded-2xl overflow-hidden border border-gray-700 shadow-2xl shadow-black/50 bg-code-bg">
-                {/* Editor header */}
                 <div className="flex items-center gap-3 px-4 py-3 bg-gray-800 border-b border-gray-700">
                   <div className="flex gap-1.5">
                     <div className="w-2.5 h-2.5 rounded-full bg-danger/70" />
                     <div className="w-2.5 h-2.5 rounded-full bg-warning/70" />
                     <div className="w-2.5 h-2.5 rounded-full bg-success/70" />
                   </div>
-                  <span className="font-mono text-xs text-gray-400">main.py</span>
-                  <span className="ml-auto font-mono text-xs text-gray-600">Python 3</span>
+                  <span className="font-mono text-xs text-gray-400">script.js</span>
+                  <span className="ml-auto font-mono text-xs text-gray-600">JavaScript</span>
                 </div>
-                {/* Code */}
                 <pre className="p-6 text-sm font-mono leading-relaxed overflow-hidden">
                   <code>
-                    {HERO_CODE.split('\n').map((line, i) => {
+                    {JS_HERO_CODE.split('\n').map((line, i) => {
                       const hashIdx = heroFindComment(line)
                       const codePart = hashIdx >= 0 ? line.slice(0, hashIdx) : line
                       const commentPart = hashIdx >= 0 ? line.slice(hashIdx) : ''
@@ -163,50 +161,54 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {/* Python course card */}
-          <Link
-            href="/cursos/python"
-            className="group block bg-gray-900 border border-gray-700 hover:border-primary/40 rounded-2xl p-6 transition-all mb-5 shadow-sm hover:shadow-primary/5 hover:shadow-lg"
-          >
-            <div className="flex items-start gap-5">
-              <div className="w-14 h-14 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-3xl shrink-0">
-                {pythonCourse.icon}
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                  <h3 className="text-gray-50 font-bold text-xl group-hover:text-primary transition-colors">
-                    {pythonCourse.title}
-                  </h3>
-                  <Badge variant="success">Disponible</Badge>
-                </div>
-                <p className="text-gray-400 text-sm leading-relaxed mb-4">{pythonCourse.description}</p>
-                <div className="flex flex-wrap gap-3">
-                  {[
-                    { icon: '📚', label: `${pythonCourse.totalLessons} lecciones` },
-                    { icon: '🗂', label: `${pythonCourse.modules.length} módulos` },
-                    { icon: '⭐', label: pythonCourse.level },
-                    { icon: '💰', label: 'Gratis' },
-                  ].map((tag) => (
-                    <span key={tag.label} className="font-mono text-xs text-gray-500">
-                      {tag.icon} {tag.label}
+          <div className="space-y-4 mb-8">
+            {availableCourses.map((course) => (
+              <Link
+                key={course.slug}
+                href={`/cursos/${course.slug}`}
+                className="group block bg-gray-900 border border-gray-700 hover:border-primary/40 rounded-2xl p-6 transition-all shadow-sm hover:shadow-primary/5 hover:shadow-lg"
+              >
+                <div className="flex items-start gap-5">
+                  <div className="w-14 h-14 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-3xl shrink-0">
+                    {course.icon}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                      <h3 className="text-gray-50 font-bold text-xl group-hover:text-primary transition-colors">
+                        {course.title}
+                      </h3>
+                      <Badge variant="success">Disponible</Badge>
+                    </div>
+                    <p className="text-gray-400 text-sm leading-relaxed mb-4">{course.description}</p>
+                    <div className="flex flex-wrap gap-3">
+                      {[
+                        { icon: '📚', label: `${course.totalLessons} lecciones` },
+                        { icon: '🗂', label: `${course.modules.length} módulos` },
+                        { icon: '⭐', label: course.level },
+                        { icon: '💰', label: 'Gratis' },
+                      ].map((tag) => (
+                        <span key={tag.label} className="font-mono text-xs text-gray-500">
+                          {tag.icon} {tag.label}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="hidden sm:flex items-center shrink-0">
+                    <span className="bg-primary group-hover:bg-primary-dark text-white font-semibold px-5 py-2 rounded-lg text-sm transition-colors">
+                      Ver curso →
                     </span>
-                  ))}
+                  </div>
                 </div>
-              </div>
-              <div className="hidden sm:flex items-center shrink-0">
-                <span className="bg-primary group-hover:bg-primary-dark text-white font-semibold px-5 py-2 rounded-lg text-sm transition-colors">
-                  Ver curso →
-                </span>
-              </div>
-            </div>
-          </Link>
+              </Link>
+            ))}
+          </div>
 
           {/* Próximamente */}
           <div>
             <p className="text-xs font-mono text-gray-600 uppercase tracking-widest mb-3">
               // próximamente
             </p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {futureCourses.map((course) => (
                 <div
                   key={course.slug}
@@ -318,6 +320,12 @@ export default function HomePage() {
               className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold px-8 py-3.5 rounded-xl transition-all shadow-lg shadow-primary/20 text-sm"
             >
               <span>🐍</span> Empezar Python — es gratis
+            </Link>
+            <Link
+              href="/cursos/javascript/que-es-javascript"
+              className="inline-flex items-center justify-center gap-2 bg-yellow-500/10 hover:bg-yellow-500/20 border border-yellow-500/30 hover:border-yellow-400/50 text-yellow-300 font-semibold px-8 py-3.5 rounded-xl transition-all text-sm"
+            >
+              <span>🟨</span> Empezar JavaScript — es gratis
             </Link>
             <Link
               href="/cursos"

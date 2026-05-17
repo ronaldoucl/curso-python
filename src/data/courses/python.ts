@@ -1,5 +1,6 @@
 import type { Course } from '@/types'
-import { lessons, modules, totalLessons } from '@/data/courseData'
+import { lessons, modules, totalLessons, getLessonBySlug, getPrevNextLessons } from '@/data/courseData'
+import type { CourseEntry } from './types'
 
 export { lessons as pythonLessons, modules as pythonModules }
 
@@ -15,4 +16,11 @@ export const pythonCourse: Course = {
   icon: '🐍',
   totalLessons,
   modules,
+}
+
+export const pythonEntry: CourseEntry = {
+  course: pythonCourse,
+  getLessonBySlug,
+  getPrevNextLessons,
+  getAllLessons: () => lessons,
 }

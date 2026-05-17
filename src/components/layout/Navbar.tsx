@@ -58,14 +58,6 @@ export default function Navbar() {
 
           {/* Right side */}
           <div className="hidden md:flex items-center gap-3">
-            <Link
-              href="/cursos/python"
-              className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-accent border border-accent/30 bg-accent/5 hover:bg-accent/10 px-3 py-1.5 rounded-lg transition-all"
-            >
-              <span>🐍</span>
-              Python
-            </Link>
-
             {loading ? (
               <div className="h-8 w-28 bg-gray-800 rounded-lg animate-pulse" />
             ) : user ? (
@@ -120,13 +112,6 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              href="/cursos/python"
-              className="text-accent font-mono text-sm px-3 py-2"
-              onClick={() => setMenuOpen(false)}
-            >
-              🐍 Python desde Cero
-            </Link>
             {!loading && (
               user ? (
                 <button

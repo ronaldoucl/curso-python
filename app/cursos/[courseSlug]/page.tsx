@@ -42,6 +42,11 @@ const LEVEL_CONFIG = {
     numberBg: 'bg-success/15 text-success border border-success/30',
     badge: 'bg-success/10 text-success border-success/30',
   },
+  nivel2: {
+    label: 'Nivel 2',
+    numberBg: 'bg-orange-500/15 text-orange-400 border border-orange-500/30',
+    badge: 'bg-orange-500/10 text-orange-400 border-orange-500/30',
+  },
 }
 
 function ModuleSection({
@@ -158,6 +163,7 @@ export default function CourseDetailPage({ params }: Props) {
   const basicModules = course.modules.filter((m) => m.level === 'básico' || !m.level)
   const intermediateModules = course.modules.filter((m) => m.level === 'intermedio')
   const practicalModules = course.modules.filter((m) => m.level === 'practico')
+  const nivel2Modules = course.modules.filter((m) => m.level === 'nivel2')
 
   // Primera lección del curso para el CTA
   const firstLesson = course.modules[0]?.lessons[0]
@@ -222,7 +228,7 @@ export default function CourseDetailPage({ params }: Props) {
 
       {/* Módulos por nivel */}
       <LevelSection
-        title={`${course.shortTitle} Básico`}
+        title={nivel2Modules.length > 0 ? 'Nivel 1: Fundamentos absolutos' : `${course.shortTitle} Básico`}
         badge={LEVEL_CONFIG.básico.badge}
         mods={basicModules}
         courseSlug={courseSlug}
@@ -245,6 +251,40 @@ export default function CourseDetailPage({ params }: Props) {
         completedSlugs={completedSlugs}
         numberBg={LEVEL_CONFIG.practico.numberBg}
       />
+      <LevelSection
+        title="Nivel 2: Datos, funciones y lógica"
+        badge={LEVEL_CONFIG.nivel2.badge}
+        mods={nivel2Modules}
+        courseSlug={courseSlug}
+        completedSlugs={completedSlugs}
+        numberBg={LEVEL_CONFIG.nivel2.numberBg}
+      />
+
+      {/* Roadmap — próximos módulos */}
+      {course.roadmap && course.roadmap.length > 0 && (
+        <div className="mt-4 mb-10">
+          <div className="flex items-center gap-2.5 mb-4">
+            <h2 className="text-base font-bold text-gray-200">Próximamente</h2>
+            <span className="text-xs font-mono font-medium px-2.5 py-0.5 rounded-full border bg-gray-800/60 text-gray-500 border-gray-700">
+              en desarrollo
+            </span>
+          </div>
+          <div className="border border-gray-800 rounded-xl overflow-hidden divide-y divide-gray-800">
+            {course.roadmap.map((topic, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-3 px-4 py-3 bg-gray-950/40"
+              >
+                <span className="font-mono text-xs w-6 h-6 rounded-md bg-gray-800 border border-gray-700 flex items-center justify-center text-gray-600 shrink-0">
+                  {i + 1}
+                </span>
+                <span className="text-sm text-gray-500">{topic}</span>
+                <span className="ml-auto text-xs font-mono text-gray-700">próximamente</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

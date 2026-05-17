@@ -56,7 +56,7 @@ export async function saveLessonProgress(
       completed: true,
       completed_at: new Date().toISOString(),
     },
-    { onConflict: 'user_id,lesson_slug' }
+    { onConflict: 'user_id,course_slug,lesson_slug' }
   )
   if (error) throw error
 }
@@ -137,7 +137,7 @@ export async function syncLocalProgressToSupabase(
 
   const { error } = await supabase
     .from('lesson_progress')
-    .upsert(rows, { onConflict: 'user_id,lesson_slug' })
+    .upsert(rows, { onConflict: 'user_id,course_slug,lesson_slug' })
 
   if (!error) {
     localStorage.removeItem(localKey(courseSlug))

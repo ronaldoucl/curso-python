@@ -32,7 +32,7 @@ export interface Module {
   number: number
   title: string
   lessons: Lesson[]
-  level?: 'básico' | 'intermedio' | 'practico'
+  level?: 'básico' | 'intermedio' | 'practico' | 'nivel2'
 }
 
 export interface Profile {
@@ -78,6 +78,7 @@ export interface Course {
   icon: string
   totalLessons: number
   modules: Module[]
+  roadmap?: string[]
 }
 
 export interface CourseMeta {
