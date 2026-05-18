@@ -252,7 +252,7 @@ export default function CourseDetailPage({ params }: Props) {
 
       {/* Módulos por nivel */}
       <LevelSection
-        title={(nivel2Modules.length > 0 || nivel3Modules.length > 0) ? 'Nivel 1: Fundamentos absolutos' : `${course.shortTitle} Básico`}
+        title={courseSlug === 'typescript' ? 'Nivel 1: Fundamentos de TypeScript' : (nivel2Modules.length > 0 || nivel3Modules.length > 0) ? 'Nivel 1: Fundamentos absolutos' : `Nivel 1: Fundamentos de ${course.shortTitle}`}
         badge={LEVEL_CONFIG.básico.badge}
         mods={basicModules}
         courseSlug={courseSlug}
@@ -276,7 +276,7 @@ export default function CourseDetailPage({ params }: Props) {
         numberBg={LEVEL_CONFIG.practico.numberBg}
       />
       <LevelSection
-        title="Nivel 2: Datos, funciones y lógica"
+        title={courseSlug === 'typescript' ? 'Nivel 2: Funciones y objetos tipados' : 'Nivel 2: Datos, funciones y lógica'}
         badge={LEVEL_CONFIG.nivel2.badge}
         mods={nivel2Modules}
         courseSlug={courseSlug}
@@ -284,7 +284,7 @@ export default function CourseDetailPage({ params }: Props) {
         numberBg={LEVEL_CONFIG.nivel2.numberBg}
       />
       <LevelSection
-        title="Nivel 3: JavaScript en el navegador"
+        title={courseSlug === 'typescript' ? 'Nivel 3: Tipado más inteligente' : 'Nivel 3: JavaScript en el navegador'}
         badge={LEVEL_CONFIG.nivel3.badge}
         mods={nivel3Modules}
         courseSlug={courseSlug}

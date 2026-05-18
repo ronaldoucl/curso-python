@@ -1,6 +1,7 @@
 import type { Course, CourseMeta, Lesson } from '@/types'
 import { pythonEntry } from './python'
 import { javascriptEntry } from './javascript'
+import { typescriptEntry } from './typescript'
 import type { CourseEntry } from './types'
 
 export type { CourseEntry }
@@ -11,6 +12,7 @@ export type { CourseEntry }
 const registry = new Map<string, CourseEntry>([
   ['python', pythonEntry],
   ['javascript', javascriptEntry],
+  ['typescript', typescriptEntry],
 ])
 
 export const courses: Course[] = Array.from(registry.values()).map((e) => e.course)

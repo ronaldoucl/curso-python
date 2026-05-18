@@ -14,7 +14,9 @@
       "Bash(awk -F: '{sum += $2} END {print \"Total lecciones en módulos:\", sum}')",
       "Bash(npx next *)",
       "PowerShell(Get-ChildItem \"c:\\\\projects\\\\curso-python\\\\src\\\\data\\\\module[12345].ts\" | Select-Object Name, @{N='Lines';E={\\(Get-Content $_.FullName\\).Count}})",
-      "PowerShell(Get-ChildItem -Path \"c:\\\\projects\\\\curso-python\" -Depth 3 | Where-Object { $_.FullName -notmatch \"node_modules\" } | Select-Object -ExpandProperty FullName)"
+      "PowerShell(Get-ChildItem -Path \"c:\\\\projects\\\\curso-python\" -Depth 3 | Where-Object { $_.FullName -notmatch \"node_modules\" } | Select-Object -ExpandProperty FullName)",
+      "Bash(python3 fix_backticks.py)",
+      "Bash(python3 -c ' *)"
     ]
   }
 }

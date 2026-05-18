@@ -314,7 +314,7 @@ export default function HomePage() {
           <p className="text-gray-400 mb-8 leading-relaxed text-sm">
             Todos los cursos son completamente gratuitos. No necesitas tarjeta de crédito ni cuenta para comenzar.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center flex-wrap">
             <Link
               href="/cursos/python/que-es-python"
               className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold px-8 py-3.5 rounded-xl transition-all shadow-lg shadow-primary/20 text-sm"
@@ -326,6 +326,12 @@ export default function HomePage() {
               className="inline-flex items-center justify-center gap-2 bg-yellow-500/10 hover:bg-yellow-500/20 border border-yellow-500/30 hover:border-yellow-400/50 text-yellow-300 font-semibold px-8 py-3.5 rounded-xl transition-all text-sm"
             >
               <span>🟨</span> Empezar JavaScript — es gratis
+            </Link>
+            <Link
+              href="/cursos/typescript/que-es-typescript"
+              className="inline-flex items-center justify-center gap-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 hover:border-blue-400/50 text-blue-300 font-semibold px-8 py-3.5 rounded-xl transition-all text-sm"
+            >
+              <span>🔷</span> Empezar TypeScript — es gratis
             </Link>
             <Link
               href="/cursos"

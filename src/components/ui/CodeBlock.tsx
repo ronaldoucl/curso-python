@@ -25,7 +25,7 @@ export default function CodeBlock({
 
   const displayFilename =
     filename ??
-    (language === 'python' ? 'main.py' : language === 'javascript' ? 'script.js' : `code.${language}`)
+    (language === 'python' ? 'main.py' : language === 'javascript' ? 'script.js' : language === 'typescript' ? 'main.ts' : `code.${language}`)
 
   return (
     <div className="rounded-xl overflow-hidden border border-gray-700 bg-code-bg my-4 shadow-lg shadow-black/30">
@@ -121,7 +121,7 @@ function findCommentStart(line: string, isJS: boolean): number {
 }
 
 function formatCode(code: string, language: string) {
-  const isJS = language === 'javascript'
+  const isJS = language === 'javascript' || language === 'typescript'
   const highlight = isJS ? highlightJS : highlightPython
 
   return code.split('\n').map((line, i) => {
