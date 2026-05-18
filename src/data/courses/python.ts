@@ -1,5 +1,5 @@
 import type { Course } from '@/types'
-import { lessons, modules, totalLessons, getLessonBySlug, getPrevNextLessons } from '@/data/courseData'
+import { lessons, modules, totalLessons, getLessonBySlug, getPrevNextLessons } from '@/data/python/courseData'
 import type { CourseEntry } from './types'
 
 export { lessons as pythonLessons, modules as pythonModules }

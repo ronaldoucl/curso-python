@@ -47,6 +47,26 @@ const LEVEL_CONFIG = {
     numberBg: 'bg-orange-500/15 text-orange-400 border border-orange-500/30',
     badge: 'bg-orange-500/10 text-orange-400 border-orange-500/30',
   },
+  nivel3: {
+    label: 'Nivel 3',
+    numberBg: 'bg-violet-500/15 text-violet-400 border border-violet-500/30',
+    badge: 'bg-violet-500/10 text-violet-400 border-violet-500/30',
+  },
+  nivel4: {
+    label: 'Nivel 4',
+    numberBg: 'bg-cyan-500/15 text-cyan-400 border border-cyan-500/30',
+    badge: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30',
+  },
+  nivel5: {
+    label: 'Nivel 5',
+    numberBg: 'bg-amber-500/15 text-amber-400 border border-amber-500/30',
+    badge: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
+  },
+  nivel6: {
+    label: 'Nivel 6',
+    numberBg: 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30',
+    badge: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
+  },
 }
 
 function ModuleSection({
@@ -164,6 +184,10 @@ export default function CourseDetailPage({ params }: Props) {
   const intermediateModules = course.modules.filter((m) => m.level === 'intermedio')
   const practicalModules = course.modules.filter((m) => m.level === 'practico')
   const nivel2Modules = course.modules.filter((m) => m.level === 'nivel2')
+  const nivel3Modules = course.modules.filter((m) => m.level === 'nivel3')
+  const nivel4Modules = course.modules.filter((m) => m.level === 'nivel4')
+  const nivel5Modules = course.modules.filter((m) => m.level === 'nivel5')
+  const nivel6Modules = course.modules.filter((m) => m.level === 'nivel6')
 
   // Primera lección del curso para el CTA
   const firstLesson = course.modules[0]?.lessons[0]
@@ -228,7 +252,7 @@ export default function CourseDetailPage({ params }: Props) {
 
       {/* Módulos por nivel */}
       <LevelSection
-        title={nivel2Modules.length > 0 ? 'Nivel 1: Fundamentos absolutos' : `${course.shortTitle} Básico`}
+        title={(nivel2Modules.length > 0 || nivel3Modules.length > 0) ? 'Nivel 1: Fundamentos absolutos' : `${course.shortTitle} Básico`}
         badge={LEVEL_CONFIG.básico.badge}
         mods={basicModules}
         courseSlug={courseSlug}
@@ -258,6 +282,38 @@ export default function CourseDetailPage({ params }: Props) {
         courseSlug={courseSlug}
         completedSlugs={completedSlugs}
         numberBg={LEVEL_CONFIG.nivel2.numberBg}
+      />
+      <LevelSection
+        title="Nivel 3: JavaScript en el navegador"
+        badge={LEVEL_CONFIG.nivel3.badge}
+        mods={nivel3Modules}
+        courseSlug={courseSlug}
+        completedSlugs={completedSlugs}
+        numberBg={LEVEL_CONFIG.nivel3.numberBg}
+      />
+      <LevelSection
+        title="Nivel 4: JavaScript moderno"
+        badge={LEVEL_CONFIG.nivel4.badge}
+        mods={nivel4Modules}
+        courseSlug={courseSlug}
+        completedSlugs={completedSlugs}
+        numberBg={LEVEL_CONFIG.nivel4.numberBg}
+      />
+      <LevelSection
+        title="Nivel 5: Asincronía y APIs"
+        badge={LEVEL_CONFIG.nivel5.badge}
+        mods={nivel5Modules}
+        courseSlug={courseSlug}
+        completedSlugs={completedSlugs}
+        numberBg={LEVEL_CONFIG.nivel5.numberBg}
+      />
+      <LevelSection
+        title="Nivel 6: Herramientas, calidad y proyectos"
+        badge={LEVEL_CONFIG.nivel6.badge}
+        mods={nivel6Modules}
+        courseSlug={courseSlug}
+        completedSlugs={completedSlugs}
+        numberBg={LEVEL_CONFIG.nivel6.numberBg}
       />
 
       {/* Roadmap — próximos módulos */}

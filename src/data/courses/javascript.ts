@@ -23,18 +23,10 @@ export const javascriptCourse: Course = {
   totalLessons: jsTotalLessons,
   modules: jsModules,
   roadmap: [
-    'DOM y eventos',
-    'Formularios y validaciones',
-    'JSON y localStorage',
-    'Manejo de errores',
-    'JavaScript moderno (ES6+)',
-    'Módulos en JavaScript',
-    'Asincronía: callbacks, promises y async/await',
-    'Fetch API',
-    'Consumo de APIs reales',
-    'NPM y herramientas básicas',
-    'Vite y estructura de proyectos',
-    'Proyecto final práctico',
+    'Introducción a frameworks (React o Vue)',
+    'TypeScript desde cero',
+    'Testing avanzado con mocks y cobertura',
+    'Despliegue y CI/CD básico',
   ],
 }
 

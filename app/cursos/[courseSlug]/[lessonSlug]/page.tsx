@@ -116,7 +116,7 @@ export default function LessonPage({ params }: Props) {
           {/* Código */}
           <section>
             <SectionHeader icon="💻" title="Ejemplo de código" />
-            <CodeBlock code={lesson.codeExample} language="python" />
+            <CodeBlock code={lesson.codeExample} language={courseSlug} />
           </section>
 
           {/* Puntos clave */}
