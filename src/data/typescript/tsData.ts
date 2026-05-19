@@ -14,6 +14,11 @@ import { lessonsTsModule12, tsModule12 } from './tsModule12'
 import { lessonsTsModule13, tsModule13 } from './tsModule13'
 import { lessonsTsModule14, tsModule14 } from './tsModule14'
 import { lessonsTsModule15, tsModule15 } from './tsModule15'
+import { lessonsTsModule16, tsModule16 } from './tsModule16'
+import { lessonsTsModule17, tsModule17 } from './tsModule17'
+import { lessonsTsModule18, tsModule18 } from './tsModule18'
+import { lessonsTsModule19, tsModule19 } from './tsModule19'
+import { lessonsTsModule20, tsModule20 } from './tsModule20'
 
 export const tsLessons: Lesson[] = [
   ...lessonsTsModule1,
@@ -31,6 +36,11 @@ export const tsLessons: Lesson[] = [
   ...lessonsTsModule13,
   ...lessonsTsModule14,
   ...lessonsTsModule15,
+  ...lessonsTsModule16,
+  ...lessonsTsModule17,
+  ...lessonsTsModule18,
+  ...lessonsTsModule19,
+  ...lessonsTsModule20,
 ]
 
 export const tsModules: Module[] = [
@@ -49,6 +59,11 @@ export const tsModules: Module[] = [
   tsModule13,
   tsModule14,
   tsModule15,
+  tsModule16,
+  tsModule17,
+  tsModule18,
+  tsModule19,
+  tsModule20,
 ]
 
 export const tsTotalLessons = tsLessons.length

@@ -292,7 +292,7 @@ export default function CourseDetailPage({ params }: Props) {
         numberBg={LEVEL_CONFIG.nivel3.numberBg}
       />
       <LevelSection
-        title="Nivel 4: JavaScript moderno"
+        title={courseSlug === 'typescript' ? 'Nivel 4: Genéricos y utilidades' : 'Nivel 4: JavaScript moderno'}
         badge={LEVEL_CONFIG.nivel4.badge}
         mods={nivel4Modules}
         courseSlug={courseSlug}

@@ -23,8 +23,6 @@ export const typescriptCourse: Course = {
   totalLessons: tsTotalLessons,
   modules: tsModules,
   roadmap: [
-    'Genéricos',
-    'Utility types',
     'TypeScript con DOM',
     'TypeScript con APIs',
     'TypeScript con React',
