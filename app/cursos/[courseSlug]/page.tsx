@@ -208,7 +208,14 @@ export default function CourseDetailPage({ params }: Props) {
           {course.icon}
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-gray-50 mb-1">{course.title}</h1>
+          <div className="flex items-center gap-2 mb-1 flex-wrap">
+            <h1 className="text-2xl font-bold text-gray-50">{course.title}</h1>
+            {course.label && (
+              <span className="font-mono text-xs font-semibold px-2.5 py-0.5 rounded-full border bg-accent/10 text-accent border-accent/30">
+                {course.label}
+              </span>
+            )}
+          </div>
           <p className="text-gray-400 text-sm mb-2">{course.description}</p>
           <div className="flex flex-wrap gap-3 font-mono text-xs text-gray-500">
             <span>{course.totalLessons} lecciones</span>
@@ -252,7 +259,12 @@ export default function CourseDetailPage({ params }: Props) {
 
       {/* Módulos por nivel */}
       <LevelSection
-        title={courseSlug === 'typescript' ? 'Nivel 1: Fundamentos de TypeScript' : (nivel2Modules.length > 0 || nivel3Modules.length > 0) ? 'Nivel 1: Fundamentos absolutos' : `Nivel 1: Fundamentos de ${course.shortTitle}`}
+        title={
+          courseSlug === 'logica-programacion' ? 'Nivel 1: Fundamentos del pensamiento lógico' :
+          courseSlug === 'typescript' ? 'Nivel 1: Fundamentos de TypeScript' :
+          (nivel2Modules.length > 0 || nivel3Modules.length > 0) ? 'Nivel 1: Fundamentos absolutos' :
+          `Nivel 1: Fundamentos de ${course.shortTitle}`
+        }
         badge={LEVEL_CONFIG.básico.badge}
         mods={basicModules}
         courseSlug={courseSlug}
@@ -276,7 +288,11 @@ export default function CourseDetailPage({ params }: Props) {
         numberBg={LEVEL_CONFIG.practico.numberBg}
       />
       <LevelSection
-        title={courseSlug === 'typescript' ? 'Nivel 2: Funciones y objetos tipados' : 'Nivel 2: Datos, funciones y lógica'}
+        title={
+          courseSlug === 'logica-programacion' ? 'Nivel 2: Variables, condiciones y decisiones' :
+          courseSlug === 'typescript' ? 'Nivel 2: Funciones y objetos tipados' :
+          'Nivel 2: Datos, funciones y lógica'
+        }
         badge={LEVEL_CONFIG.nivel2.badge}
         mods={nivel2Modules}
         courseSlug={courseSlug}
@@ -300,7 +316,7 @@ export default function CourseDetailPage({ params }: Props) {
         numberBg={LEVEL_CONFIG.nivel4.numberBg}
       />
       <LevelSection
-        title="Nivel 5: Asincronía y APIs"
+        title={courseSlug === 'typescript' ? 'Nivel 5: TypeScript en proyectos reales' : 'Nivel 5: Asincronía y APIs'}
         badge={LEVEL_CONFIG.nivel5.badge}
         mods={nivel5Modules}
         courseSlug={courseSlug}
@@ -308,7 +324,7 @@ export default function CourseDetailPage({ params }: Props) {
         numberBg={LEVEL_CONFIG.nivel5.numberBg}
       />
       <LevelSection
-        title="Nivel 6: Herramientas, calidad y proyectos"
+        title={courseSlug === 'typescript' ? 'Nivel 6: TypeScript profesional' : 'Nivel 6: Herramientas, calidad y proyectos'}
         badge={LEVEL_CONFIG.nivel6.badge}
         mods={nivel6Modules}
         courseSlug={courseSlug}

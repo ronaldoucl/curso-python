@@ -19,6 +19,16 @@ import { lessonsTsModule17, tsModule17 } from './tsModule17'
 import { lessonsTsModule18, tsModule18 } from './tsModule18'
 import { lessonsTsModule19, tsModule19 } from './tsModule19'
 import { lessonsTsModule20, tsModule20 } from './tsModule20'
+import { lessonsTsModule21, tsModule21 } from './tsModule21'
+import { lessonsTsModule22, tsModule22 } from './tsModule22'
+import { lessonsTsModule23, tsModule23 } from './tsModule23'
+import { lessonsTsModule24, tsModule24 } from './tsModule24'
+import { lessonsTsModule25, tsModule25 } from './tsModule25'
+import { lessonsTsModule26, tsModule26 } from './tsModule26'
+import { lessonsTsModule27, tsModule27 } from './tsModule27'
+import { lessonsTsModule28, tsModule28 } from './tsModule28'
+import { lessonsTsModule29, tsModule29 } from './tsModule29'
+import { lessonsTsModule30, tsModule30 } from './tsModule30'
 
 export const tsLessons: Lesson[] = [
   ...lessonsTsModule1,
@@ -41,6 +51,16 @@ export const tsLessons: Lesson[] = [
   ...lessonsTsModule18,
   ...lessonsTsModule19,
   ...lessonsTsModule20,
+  ...lessonsTsModule21,
+  ...lessonsTsModule22,
+  ...lessonsTsModule23,
+  ...lessonsTsModule24,
+  ...lessonsTsModule25,
+  ...lessonsTsModule26,
+  ...lessonsTsModule27,
+  ...lessonsTsModule28,
+  ...lessonsTsModule29,
+  ...lessonsTsModule30,
 ]
 
 export const tsModules: Module[] = [
@@ -64,6 +84,16 @@ export const tsModules: Module[] = [
   tsModule18,
   tsModule19,
   tsModule20,
+  tsModule21,
+  tsModule22,
+  tsModule23,
+  tsModule24,
+  tsModule25,
+  tsModule26,
+  tsModule27,
+  tsModule28,
+  tsModule29,
+  tsModule30,
 ]
 
 export const tsTotalLessons = tsLessons.length

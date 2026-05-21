@@ -1,4 +1,5 @@
 import type { Course, CourseMeta, Lesson } from '@/types'
+import { logicaEntry } from './logica'
 import { pythonEntry } from './python'
 import { javascriptEntry } from './javascript'
 import { typescriptEntry } from './typescript'
@@ -8,8 +9,10 @@ export type { CourseEntry }
 
 // ── Registro de cursos ───────────────────────────────────────────────────────
 // Para agregar un nuevo curso: importar su CourseEntry y añadir una línea aquí.
+// El orden en el Map determina el orden de aparición en la lista de cursos.
 
 const registry = new Map<string, CourseEntry>([
+  ['logica-programacion', logicaEntry],
   ['python', pythonEntry],
   ['javascript', javascriptEntry],
   ['typescript', typescriptEntry],

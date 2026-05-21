@@ -79,6 +79,8 @@ export interface Course {
   totalLessons: number
   modules: Module[]
   roadmap?: string[]
+  order?: number
+  label?: string
 }
 
 export interface CourseMeta {

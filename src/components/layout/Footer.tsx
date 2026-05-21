@@ -32,6 +32,12 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/cursos/logica-programacion" className="text-gray-400 hover:text-gray-200 text-sm transition-colors inline-flex items-center gap-1.5">
+                  <span className="font-mono text-accent text-xs">🧠</span>
+                  Lógica de Programación
+                </Link>
+              </li>
+              <li>
                 <Link href="/cursos/python" className="text-gray-400 hover:text-gray-200 text-sm transition-colors inline-flex items-center gap-1.5">
                   <span className="font-mono text-accent text-xs">🐍</span>
                   Python desde Cero

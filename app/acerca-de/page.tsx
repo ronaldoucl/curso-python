@@ -21,12 +21,12 @@ export default function AcercaDePage() {
 
       {/* Hero */}
       <div className="text-center mb-14">
-        <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-accent/10 border border-accent/20 mb-5">
-          <span className="text-5xl">🐍</span>
+        <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-primary/10 border border-primary/30 mb-5">
+          <span className="text-primary font-mono font-extrabold text-3xl">RS</span>
         </div>
         <p className="font-mono text-xs text-primary mb-2">// ronaldoscript</p>
-        <h1 className="text-4xl font-extrabold text-gray-50 mb-2">Python desde Cero</h1>
-        <p className="text-gray-400 text-sm mb-6">por RonaldoScript</p>
+        <h1 className="text-4xl font-extrabold text-gray-50 mb-2">RonaldoScript</h1>
+        <p className="text-gray-400 text-sm mb-6">Cursos gratuitos de programación en español</p>
 
         <div className="flex justify-center gap-8">
           {[
@@ -203,10 +203,10 @@ export default function AcercaDePage() {
       {/* CTA */}
       <div className="text-center mt-10 space-y-3">
         <Link
-          href="/cursos/python"
+          href="/cursos/logica-programacion/que-es-la-logica-de-programacion"
           className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-bold px-8 py-3.5 rounded-xl transition-colors text-sm shadow-lg shadow-primary/20"
         >
-          <span>🐍</span> Empezar Python desde Cero →
+          <span>🧠</span> Empezar con Lógica — es gratis →
         </Link>
         <p className="text-gray-600 font-mono text-xs">// sin registro · sin tarjeta · empieza ahora</p>
       </div>

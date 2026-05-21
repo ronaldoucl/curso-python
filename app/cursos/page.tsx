@@ -48,6 +48,11 @@ export default function CursosPage() {
                     <h3 className="text-gray-50 font-bold text-xl group-hover:text-primary transition-colors">
                       {course.title}
                     </h3>
+                    {course.label && (
+                      <span className="font-mono text-xs font-semibold px-2 py-0.5 rounded-full border bg-accent/10 text-accent border-accent/30">
+                        {course.label}
+                      </span>
+                    )}
                     <Badge variant="success">Disponible</Badge>
                   </div>
                   <p className="text-gray-400 text-sm leading-relaxed mb-4">{course.description}</p>

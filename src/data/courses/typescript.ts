@@ -22,13 +22,7 @@ export const typescriptCourse: Course = {
   icon: '🔷',
   totalLessons: tsTotalLessons,
   modules: tsModules,
-  roadmap: [
-    'TypeScript con DOM',
-    'TypeScript con APIs',
-    'TypeScript con React',
-    'TypeScript con Next.js',
-    'Proyecto final TypeScript',
-  ],
+  roadmap: [],
 }
 
 export const typescriptEntry: CourseEntry = {

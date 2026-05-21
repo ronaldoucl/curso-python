@@ -13,6 +13,7 @@ import type { QuizAttempt } from '@/types'
 
 export default function ProgresoPage() {
   const { user, loading } = useUser()
+  const [completedByLogica, setCompletedByLogica] = useState<string[]>([])
   const [completedByPython, setCompletedByPython] = useState<string[]>([])
   const [quizAttempts, setQuizAttempts] = useState<QuizAttempt[]>([])
   const [loadingData, setLoadingData] = useState(true)
@@ -21,8 +22,12 @@ export default function ProgresoPage() {
     if (loading) return
     const fetchData = async () => {
       try {
-        const slugs = await getLessonProgress(user?.id ?? null, 'python')
-        setCompletedByPython(slugs)
+        const [logicaSlugs, pythonSlugs] = await Promise.all([
+          getLessonProgress(user?.id ?? null, 'logica-programacion'),
+          getLessonProgress(user?.id ?? null, 'python'),
+        ])
+        setCompletedByLogica(logicaSlugs)
+        setCompletedByPython(pythonSlugs)
         if (user) {
           const attempts = await getQuizAttempts(user.id, 'python')
           setQuizAttempts(attempts)
@@ -44,7 +49,12 @@ export default function ProgresoPage() {
     )
   }
 
-  const pythonCourse = courses[0]
+  const logicaCourse = courses.find((c) => c.slug === 'logica-programacion')!
+  const logicaTotal = logicaCourse.totalLessons
+  const logicaCompleted = completedByLogica.length
+  const logicaPct = Math.round((logicaCompleted / logicaTotal) * 100)
+
+  const pythonCourse = courses.find((c) => c.slug === 'python')!
   const pythonTotal = pythonCourse.totalLessons
   const pythonCompleted = completedByPython.length
   const pythonPct = Math.round((pythonCompleted / pythonTotal) * 100)
@@ -68,6 +78,47 @@ export default function ProgresoPage() {
           <AnonymousBanner />
         </div>
       )}
+
+      {/* Tarjeta Lógica de Programación */}
+      <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 mb-6">
+        <div className="flex items-center gap-3 mb-5">
+          <div className="w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-2xl shrink-0">
+            {logicaCourse.icon}
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <h2 className="text-gray-50 font-bold text-base">{logicaCourse.title}</h2>
+              <span className="font-mono text-xs font-semibold px-2 py-0.5 rounded-full border bg-accent/10 text-accent border-accent/30">
+                Curso Base
+              </span>
+            </div>
+            <p className="font-mono text-xs text-gray-500">{logicaCourse.level} · {logicaCourse.language}</p>
+          </div>
+          <Link
+            href="/cursos/logica-programacion"
+            className="text-xs bg-primary hover:bg-primary-dark text-white font-semibold px-4 py-2 rounded-lg transition-colors shrink-0"
+          >
+            {logicaCompleted > 0 ? 'Continuar →' : 'Empezar →'}
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-3 gap-4 mb-5">
+          <div className="text-center">
+            <p className="font-mono font-extrabold text-2xl text-accent">{logicaCompleted}</p>
+            <p className="text-gray-500 text-xs mt-1">completadas</p>
+          </div>
+          <div className="text-center">
+            <p className="font-mono font-extrabold text-2xl text-gray-300">{logicaTotal}</p>
+            <p className="text-gray-500 text-xs mt-1">total</p>
+          </div>
+          <div className="text-center">
+            <p className="font-mono font-extrabold text-2xl text-success">{logicaPct}%</p>
+            <p className="text-gray-500 text-xs mt-1">completado</p>
+          </div>
+        </div>
+
+        <ProgressBar completed={logicaCompleted} total={logicaTotal} showLabel={false} size="lg" />
+      </div>
 
       {/* Tarjeta Python desde Cero */}
       <div className="bg-gray-900 border border-gray-700 rounded-2xl p-6 mb-6">
@@ -114,14 +165,14 @@ export default function ProgresoPage() {
           <span className="font-mono text-xs text-gray-600">{pythonCompleted}/{pythonTotal}</span>
         </div>
 
-        {completedByPython.length === 0 ? (
+        {completedByPython.length === 0 && completedByLogica.length === 0 ? (
           <div className="text-center py-8">
             <p className="text-gray-500 text-sm mb-4">Aún no has completado ninguna lección.</p>
             <Link
-              href="/cursos/python"
+              href="/cursos/logica-programacion/que-es-la-logica-de-programacion"
               className="inline-block bg-primary hover:bg-primary-dark text-white font-semibold px-6 py-2.5 rounded-xl transition-colors text-sm"
             >
-              Empezar Python ahora →
+              Empezar con Lógica ahora →
             </Link>
           </div>
         ) : (
@@ -194,15 +245,21 @@ export default function ProgresoPage() {
       </div>
 
       {/* CTA según estado */}
-      {pythonCompleted < pythonTotal && (
+      {(logicaCompleted < logicaTotal || pythonCompleted < pythonTotal) && (logicaCompleted + pythonCompleted > 0) && (
         <div className="bg-accent/5 border border-accent/20 rounded-2xl p-6 text-center">
           <p className="font-mono text-xs text-accent mb-2">// sigue adelante</p>
           <p className="text-gray-300 font-semibold mb-1">¡Vas muy bien!</p>
-          <p className="text-gray-400 text-sm mb-4">
-            Te faltan <span className="font-mono text-accent">{pythonTotal - pythonCompleted}</span> lecciones para completar Python desde Cero.
-          </p>
+          {logicaCompleted < logicaTotal ? (
+            <p className="text-gray-400 text-sm mb-4">
+              Te faltan <span className="font-mono text-accent">{logicaTotal - logicaCompleted}</span> lecciones para completar {logicaCourse.title}.
+            </p>
+          ) : (
+            <p className="text-gray-400 text-sm mb-4">
+              Te faltan <span className="font-mono text-accent">{pythonTotal - pythonCompleted}</span> lecciones para completar {pythonCourse.title}.
+            </p>
+          )}
           <Link
-            href="/cursos/python"
+            href={logicaCompleted < logicaTotal ? '/cursos/logica-programacion' : '/cursos/python'}
             className="inline-block bg-primary hover:bg-primary-dark text-white font-semibold px-6 py-2.5 rounded-xl transition-colors text-sm"
           >
             Continuar aprendiendo →

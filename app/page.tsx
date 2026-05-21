@@ -177,6 +177,11 @@ export default function HomePage() {
                       <h3 className="text-gray-50 font-bold text-xl group-hover:text-primary transition-colors">
                         {course.title}
                       </h3>
+                      {course.label && (
+                        <span className="font-mono text-xs font-semibold px-2 py-0.5 rounded-full border bg-accent/10 text-accent border-accent/30">
+                          {course.label}
+                        </span>
+                      )}
                       <Badge variant="success">Disponible</Badge>
                     </div>
                     <p className="text-gray-400 text-sm leading-relaxed mb-4">{course.description}</p>
@@ -310,14 +315,20 @@ export default function HomePage() {
       <section className="py-20 bg-gray-900 border-t border-gray-700">
         <div className="max-w-2xl mx-auto px-4 text-center">
           <p className="font-mono text-xs text-primary mb-3">// empieza hoy</p>
-          <h2 className="text-3xl font-bold text-gray-50 mb-4">¿Listo para escribir tu primer código?</h2>
+          <h2 className="text-3xl font-bold text-gray-50 mb-4">¿Listo para empezar desde cero?</h2>
           <p className="text-gray-400 mb-8 leading-relaxed text-sm">
             Todos los cursos son completamente gratuitos. No necesitas tarjeta de crédito ni cuenta para comenzar.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center flex-wrap">
             <Link
-              href="/cursos/python/que-es-python"
+              href="/cursos/logica-programacion/que-es-la-logica-de-programacion"
               className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold px-8 py-3.5 rounded-xl transition-all shadow-lg shadow-primary/20 text-sm"
+            >
+              <span>🧠</span> Empezar con Lógica — es gratis
+            </Link>
+            <Link
+              href="/cursos/python/que-es-python"
+              className="inline-flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-750 border border-gray-700 text-gray-300 hover:text-gray-100 font-semibold px-8 py-3.5 rounded-xl transition-all text-sm"
             >
               <span>🐍</span> Empezar Python — es gratis
             </Link>
@@ -325,13 +336,13 @@ export default function HomePage() {
               href="/cursos/javascript/que-es-javascript"
               className="inline-flex items-center justify-center gap-2 bg-yellow-500/10 hover:bg-yellow-500/20 border border-yellow-500/30 hover:border-yellow-400/50 text-yellow-300 font-semibold px-8 py-3.5 rounded-xl transition-all text-sm"
             >
-              <span>🟨</span> Empezar JavaScript — es gratis
+              <span>🟨</span> Empezar JavaScript
             </Link>
             <Link
               href="/cursos/typescript/que-es-typescript"
               className="inline-flex items-center justify-center gap-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 hover:border-blue-400/50 text-blue-300 font-semibold px-8 py-3.5 rounded-xl transition-all text-sm"
             >
-              <span>🔷</span> Empezar TypeScript — es gratis
+              <span>🔷</span> Empezar TypeScript
             </Link>
             <Link
               href="/cursos"
